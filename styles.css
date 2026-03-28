@@ -34,8 +34,8 @@ main {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 40px;
-    margin: 150px auto;
+    gap: 70px;
+    margin: 350px auto;
     padding: 20px;
     max-width: 1200px;
 }
