@@ -35,15 +35,15 @@ main {
     justify-content: center;
     align-items: center;
     gap: 70px;
-    margin: 350px auto;
+    margin: 450px auto;
     padding: 20px;
     max-width: 1200px;
 }
 
 /* 单个卡片样式 */
 .card {
-    width: 220px;
-    height: 220px;
+    width: 180px;
+    height: 180px;
     background: #ffffff;
     border-radius: 20px;
     display: flex;
