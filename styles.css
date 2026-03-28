@@ -1,5 +1,10 @@
 /* ========== 插入入户页面全屏背景图 ========== */
 body {
+        /* 基础样式 */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    
     /* 设置背景图 - 将"入户背景图.jpg"替换为你的实际文件名 */
     background-image: url('images/入户背景图.png');
     /* 背景图铺满整个页面 */
@@ -10,14 +15,6 @@ body {
     background-attachment: fixed;
     /* 背景图不重复 */
     background-repeat: no-repeat;
-}
-
-/* 这是网页的基础样式 */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
 }
 
 header {
