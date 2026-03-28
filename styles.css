@@ -38,7 +38,8 @@ main {
     gap: 90px;
     padding: 20px;
     max-width: 1200px;
-    margin: 500 auto;
+    margin: 0 auto;、
+    margin-top: 500px;  /* 垂直方向下调，越大越往下 */
 }
 
 /* 单个卡片样式 */
