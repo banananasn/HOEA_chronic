@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研究成果 - 整合式智慧慢病管理模式研究</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>整合式智慧慢病管理模式研究</h1>
+        <nav class="page-nav">
+            <a href="index.html">← 返回首页</a>
+        </nav>
+    </header>
+
+    <main class="content-page">
+        <h2>研究成果</h2>
+        <div id="documents">
+            <!-- 研究成果文档将通过 JavaScript 动态加载 -->
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy;国家科技重大专项“重大慢病防治技术推广机制研究及应用示范”课题“整合式智慧慢病管理模式研究”（编号：2024ZD0523902）@四川大学华西公共卫生学院</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
