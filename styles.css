@@ -77,3 +77,108 @@ main {
     line-height: 1.4;
     padding: 0 12px;
 }
+
+
+/* ========== 内容页面样式 ========== */
+
+/* 返回首页的导航链接 */
+.page-nav {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.page-nav a {
+    color: white;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.page-nav a:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 内容页面的 main 区域 */
+.content-page {
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 24px;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.content-page h2 {
+    color: #1e466e;
+    border-bottom: 3px solid #1e466e;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+/* 研究动态列表样式 */
+#news-links li {
+    margin: 15px 0;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#news-links li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#news-links a {
+    text-decoration: none;
+    color: #1e466e;
+    font-size: 1rem;
+    font-weight: 500;
+    display: block;
+}
+
+#news-links a:hover {
+    color: #0077b6;
+}
+
+/* 研究成果列表样式 */
+#documents p {
+    margin: 15px 0;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#documents p:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#documents a {
+    text-decoration: none;
+    color: #1e466e;
+    font-size: 1rem;
+    font-weight: 500;
+    display: block;
+}
+
+#documents a:hover {
+    color: #0077b6;
+}
+
+/* 图片容器样式 */
+.content-page .image-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.content-page .image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
