@@ -11,39 +11,26 @@
         <h1>整合式智慧慢病管理模式研究</h1>
     </header>
 
-    <main>
-        <!-- 板块一 - 研究动态 -->
-<section id="research-trends">
-    <h2>研究动态</h2>
-    <ul id="news-links">
-        <!-- 研究动态的链接将通过 JavaScript 动态加载 -->
-    </ul>
-</section>
-
-<!-- 板块二 - 研究成果 -->
-<section id="research-results">
-    <h2>研究成果</h2>
-    <div id="documents">
-        <!-- 研究成果文档将通过 JavaScript 动态加载 -->
-    </div>
-</section>        
-
-<!-- 板块三 - 研究计划 -->
-<section id="research-plan">
-    <h2>研究计划</h2>
-    <div class="image-container">
-        <img src="images/AA.jpg" alt="研究计划" style="width: 40%; margin: 0 auto; display: block;" />
-    </div>
-</section>
-
-<!-- 板块四 - 课题参与单位和人员 -->
-<section id="research-teams">
-    <h2>课题参与单位和人员</h2>
-    <div class="image-container">
-        <img src="images/BB.jpg" alt="课题参与单位和人员" />
-    </div>
-</section>
-
+<main>
+        <!-- 四个悬浮卡片，排成一排 -->
+        <div class="cards-container">
+            <div class="card" onclick="location.href='#research-trends'">
+                <h3>研究动态</h3>
+                <p>最新会议资讯 · 学术进展</p>
+            </div>
+            <div class="card" onclick="location.href='#research-results'">
+                <h3>研究成果</h3>
+                <p>论文发表 · 政策简报</p>
+            </div>
+            <div class="card" onclick="location.href='#research-plan'">
+                <h3>研究计划</h3>
+                <p>技术路线 · 年度安排</p>
+            </div>
+            <div class="card" onclick="location.href='#research-teams'">
+                <h3>参与单位与人员</h3>
+                <p>合作机构 · 研究团队</p>
+            </div>
+        </div>
     </main>
 
     <footer>
