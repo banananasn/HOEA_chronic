@@ -1,30 +1,31 @@
 /* ========== 全屏背景图 ========== */
-body {
-    font-family: Arial, sans-serif;
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
     background-image: url('images/入户背景图.png');
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-}
-
-header {
-    background-color: rgba(51, 51, 51, 0.85);
-    color: white;
-    padding: 1rem;
-    text-align: center;
-}
-
-header h1 {
-    margin: 0;
+    
+    /* 固定高度，禁止滚动 */
+    height: 100vh;
+    overflow: hidden;
+    
+    /* 使用 flex 居中卡片 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 main {
     background: transparent;
-    padding: 20px;
-    min-height: calc(100vh - 200px);
+    width: 100%;
 }
 
 /* 卡片容器 - 横向排列 */
@@ -35,9 +36,9 @@ main {
     justify-content: center;
     align-items: center;
     gap: 70px;
-    margin: 450px auto;
     padding: 20px;
     max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* 单个卡片样式 */
@@ -74,14 +75,4 @@ main {
     color: #666;
     line-height: 1.4;
     padding: 0 12px;
-}
-
-footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: rgba(51, 51, 51, 0.85);
-    color: white;
-    position: relative;
-    width: 100%;
-    margin-top: 40px;
 }
