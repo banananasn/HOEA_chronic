@@ -39,7 +39,7 @@ main {
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    margin-top: 500px;  /* 垂直方向下调，越大越往下 */
+    margin-top: 600px;  /* 垂直方向下调，越大越往下 */
 }
 
 /* 单个卡片样式 */
