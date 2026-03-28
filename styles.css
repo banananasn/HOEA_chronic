@@ -1,3 +1,17 @@
+/* ========== 插入入户页面全屏背景图 ========== */
+body {
+    /* 设置背景图 - 将"入户背景图.jpg"替换为你的实际文件名 */
+    background-image: url('images/入户背景图.jpg');
+    /* 背景图铺满整个页面 */
+    background-size: cover;
+    /* 背景图居中显示 */
+    background-position: center center;
+    /* 背景图固定，滚动时背景不动*/
+    background-attachment: fixed;
+    /* 背景图不重复 */
+    background-repeat: no-repeat;
+}
+
 /* 这是网页的基础样式 */
 body {
     font-family: Arial, sans-serif;
