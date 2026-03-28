@@ -1,19 +1,12 @@
-/* ========== 插入入户页面全屏背景图 ========== */
+/* ========== 全屏背景图 ========== */
 body {
-    /* 基础样式 */
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    
-    /* 设置背景图 - 将"入户背景图.jpg"替换为你的实际文件名 */
     background-image: url('images/入户背景图.png');
-    /* 背景图铺满整个页面 */
     background-size: cover;
-    /* 背景图居中显示 */
     background-position: center center;
-    /* 背景图固定，滚动时背景不动*/
     background-attachment: fixed;
-    /* 背景图不重复 */
     background-repeat: no-repeat;
 }
 
@@ -22,26 +15,22 @@ header {
     color: white;
     padding: 1rem;
     text-align: center;
-    position: relative;
-    z-index: 10;
 }
 
 header h1 {
     margin: 0;
 }
 
-/* 重要：main 背景必须透明，不能让白色遮挡背景图 */
 main {
     background: transparent;
     padding: 20px;
-    min-height: calc(100vh - 200px); /* 确保内容区域有足够高度 */
+    min-height: calc(100vh - 200px);
 }
 
-/* 四个悬浮卡片样式 */
-
-/* 卡片容器：让四个卡片排成一排，居中显示 */
+/* 卡片容器 - 横向排列 */
 .cards-container {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
@@ -51,7 +40,7 @@ main {
     max-width: 1200px;
 }
 
-/* 单个卡片样式 - 方形，纯色不透明 */
+/* 单个卡片样式 */
 .card {
     width: 220px;
     height: 220px;
@@ -68,13 +57,11 @@ main {
     border: 1px solid #e0e0e0;
 }
 
-/* 悬浮效果：上浮 + 阴影加深 */
 .card:hover {
     transform: translateY(-12px);
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.25);
 }
 
-/* 卡片标题样式 */
 .card h3 {
     font-size: 1.5rem;
     font-weight: bold;
@@ -82,7 +69,6 @@ main {
     margin-bottom: 12px;
 }
 
-/* 卡片描述文字样式 */
 .card p {
     font-size: 0.85rem;
     color: #666;
@@ -90,34 +76,6 @@ main {
     padding: 0 12px;
 }
 
-/* 移除旧的 section 样式（如果不需要的话，可以保留但不会影响卡片） */
-section {
-    margin-bottom: 30px;
-}
-
-h2 {
-    color: #333;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-ul li {
-    margin: 5px 0;
-}
-
-.image-container {
-    text-align: center;
-    margin: 20px 0;
-}
-
-#research-results {
-    margin-top: 20px;
-}
-
-/* footer 样式 - 改为相对定位，避免遮挡内容 */
 footer {
     text-align: center;
     padding: 1rem;
@@ -126,5 +84,4 @@ footer {
     position: relative;
     width: 100%;
     margin-top: 40px;
-    z-index: 10;
 }
