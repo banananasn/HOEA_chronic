@@ -204,24 +204,34 @@ main {
 }
 
 /* 底部文字容器 */
+/* 底部文字容器 */
 .home-footer {
-    text-align: center;           /* 水平居中（left/center/right） */
-    position: absolute;           /* 绝对定位，相对于浏览器窗口 */
-    bottom: 15px;                 /* 距离底部距离，越大越往上 */
+    text-align: center;
+    position: absolute;
+    bottom: 20px;
     left: 0;
     right: 0;
-    color: #330E0E;                 /* 文字颜色 */
-    font-size: 1.2rem;              /* 文字大小 */
-    line-height: 2;             /* 行高（控制两行间距） */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);  /* 文字阴影 */
+    color: black;
+    font-size: 1.2rem;
+    line-height: 2;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     z-index: 10;
 }
-
 .home-footer p {
     margin: 5px 0;
     letter-spacing: 1px;
 }
-
+/* 覆盖超链接默认颜色*/
+.home-footer a {
+    color: black;           /* 设置链接颜色为白色 */
+    text-decoration: none;  /* 去掉下划线 */
+    transition: opacity 0.3s ease;
+}
+/* 鼠标悬停效果 */
+.home-footer a:hover {
+    opacity: 0.8;
+    text-decoration: underline;  /* 悬停时显示下划线 */
+}
 
 /* ========== 移动端适配（手机/平板） ========== */
 /* 平板设备（宽度小于 1024px） */
