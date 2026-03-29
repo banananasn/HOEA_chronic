@@ -182,3 +182,35 @@ main {
     border-radius: 16px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
+
+/* ========== 主页底部文字样式 ========== */
+
+/* 调整 main 的布局，让内容从上到下排列 */
+main {
+    background: transparent;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 底部文字容器 */
+.home-footer {
+    text-align: center;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    color: white;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.home-footer p {
+    margin: 5px 0;
+    letter-spacing: 1px;
+}
