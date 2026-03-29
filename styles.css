@@ -279,21 +279,6 @@ main {
         margin: 3px 0;
     }
 }
-
-/* 超小手机（宽度小于 480px） */
-@media (max-width: 480px) {
-    .card {
-        width: 180px;
-        height: 180px;
-    }
-    .card h3 {
-        font-size: 1.1rem;
-    }
-    .card p {
-        font-size: 0.7rem;
-    }
-    .home-footer {
-        font-size: 0.6rem;
         bottom: 10px;
     }
 }
