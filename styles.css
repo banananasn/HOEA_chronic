@@ -213,7 +213,7 @@ main {
     right: 0;
     color: black;
     font-size: 1rem;
-    line-height: 2;
+    line-height: 1.75;
     text-shadow: none;
     z-index: 10;
 }
