@@ -302,7 +302,7 @@ body.sub-page {
 
 /* ========== 版头样式（在导航栏上方） ========== */
 .sub-header {
-    background: linear-gradient(135deg, rgba(51, 51, 51, 0.95), rgba(34, 34, 34, 0.95));
+    background: linear-gradient(135deg, rgb(128,0,0), rgb(128,0,0));
     color: white;
     padding: 1.5rem 1rem;
     text-align: center;
@@ -312,7 +312,7 @@ body.sub-page {
 .sub-header h1 {
     margin: 0;
     font-size: 1.6rem;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 1px;
 }
 
