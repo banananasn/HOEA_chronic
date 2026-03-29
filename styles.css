@@ -213,7 +213,6 @@ main {
     line-height: 1.75;
     text-shadow: none;
     z-index: 10;
-    font-weight: bold; 
 }
 .home-footer p {
     margin: 5px 0;
