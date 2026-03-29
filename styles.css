@@ -43,7 +43,7 @@ main {
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    margin-top: 360px;  /* 垂直方向下调，越大越往下 */
+    margin-top: 375px;  /* 垂直方向下调，越大越往下 */
 }
 
 /* 单个卡片样式 */
@@ -209,10 +209,11 @@ main {
     left: 0;
     right: 0;
     color: black;
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.75;
     text-shadow: none;
     z-index: 10;
+    font-weight: bold; 
 }
 .home-footer p {
     margin: 5px 0;
