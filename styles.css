@@ -288,3 +288,65 @@ main {
         color: black;
     }
 }
+
+
+/* ========== 子页面固定导航栏样式 ========== */
+.sub-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 12px 0;
+}
+
+.sub-nav-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.sub-nav-item {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.sub-nav-item:hover {
+    background: #f0f0f0;
+    color: #8B0000;
+}
+
+.sub-nav-item.active {
+    background: #8B0000;
+    color: white;
+}
+
+/* 子页面主要内容区域 */
+.sub-page-content {
+    margin-top: 80px;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 24px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.sub-page-content h2 {
+    color: #1e466e;
+    border-bottom: 3px solid #1e466e;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
