@@ -13,14 +13,21 @@ body {
     background-attachment: fixed;
     background-repeat: no-repeat;
     
-    /* 固定高度，禁止滚动 */
-    height: 100vh;
-    overflow: hidden;
+    /* 手机端允许滚动，桌面端一屏 */
+    min-height: 100vh;
     
-    /* 使用 flex 居中卡片 */
+    /* 使用 flex 布局 */
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* 桌面端（宽度大于 768px）时禁止滚动 */
+@media (min-width: 769px) {
+    body {
+        height: 100vh;
+        overflow: hidden;
+    }
 }
 
 main {
@@ -213,4 +220,70 @@ main {
 .home-footer p {
     margin: 5px 0;
     letter-spacing: 1px;
+}
+
+
+/* ========== 移动端适配（手机/平板） ========== */
+/* 平板设备（宽度小于 1024px） */
+@media (max-width: 1024px) {
+    .cards-container {
+        gap: 40px;  /* 减小卡片间距 */
+    }
+    .card {
+        width: 160px;
+        height: 160px;  /* 卡片稍微缩小 */
+    }
+    .card h3 {
+        font-size: 1.2rem;  /* 标题缩小 */
+    }
+    .card p {
+        font-size: 0.75rem;  /* 描述文字缩小 */
+    }
+}
+
+/* 手机设备（宽度小于 768px） */
+@media (max-width: 768px) {
+    /* 让卡片竖向排列（一列） */
+    .cards-container {
+        flex-direction: column;
+        gap: 25px;
+        margin-top: 80px;  /* 调整垂直位置 */
+    }
+    .card {
+        width: 200px;
+        height: 200px;  /* 手机上卡片稍大一点，方便点击 */
+    }
+    .card h3 {
+        font-size: 1.3rem;
+    }
+    .card p {
+        font-size: 0.8rem;
+    }
+    
+    /* 底部文字调整 */
+    .home-footer {
+        bottom: 15px;
+        font-size: 0.7rem;
+    }
+    .home-footer p {
+        margin: 3px 0;
+    }
+}
+
+/* 超小手机（宽度小于 480px） */
+@media (max-width: 480px) {
+    .card {
+        width: 180px;
+        height: 180px;
+    }
+    .card h3 {
+        font-size: 1.1rem;
+    }
+    .card p {
+        font-size: 0.7rem;
+    }
+    .home-footer {
+        font-size: 0.6rem;
+        bottom: 10px;
+    }
 }
