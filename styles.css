@@ -33,6 +33,22 @@ body {
     }
 }
 
+/* ========== 子页面样式 ========== */
+body.sub-page {
+    /* 子页面：允许滚动 */
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* 覆盖首页的居中布局，改为从上到下排列 */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    /* 背景随内容滚动 */
+    background-attachment: scroll;
+}
+
 
 /* 桌面端（宽度大于 768px）时禁止滚动 */
 @media (min-width: 769px) {
