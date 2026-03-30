@@ -385,6 +385,8 @@ body.sub-page {
     align-items: stretch !important;
     justify-content: flex-start !important;
     min-height: 100vh;
+    height: auto;                 /* 新增：允许高度自动 */
+    overflow-y: auto;             /* 新增：允许垂直滚动 */
     background-attachment: scroll;
 }
 
@@ -457,8 +459,10 @@ body.sub-page {
     background: rgba(255, 255, 255, 0.92);
     border-radius: 0;
     max-width: 100%;
-    padding: 1vh 5vw;
+    padding: 0 5vw;              /* 上边距为0 */
+    margin-top: 0;               /* 确保没有上边距 */
     box-shadow: none;
+    flex: 0 0 auto;              /* 不拉伸，保持内容高度 */
 }
 
 .sub-page-content h2,
