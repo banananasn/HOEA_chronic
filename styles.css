@@ -43,7 +43,7 @@ main {
     padding: 20px;
     max-width: 90%;
     margin: 0 auto;
-    margin-top: 15vh;  /* 垂直方向下调，越大越往下 */
+    margin-top: 5vh;  /* 上边距为视口高度的15%，自动适配 */
 }
 
 /* 单个卡片样式 */
