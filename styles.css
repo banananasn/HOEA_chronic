@@ -20,7 +20,7 @@ body {
     justify-content: center;
 
      /* 添加动画：背景图从上到下飞入 */
-    animation: bgFlyIn 0.8s ease-out forwards;
+    animation: bgFlyIn 1s ease-out forwards;
 }
 /* 定义背景图飞入动画 */
 @keyframes bgFlyIn {
@@ -75,7 +75,7 @@ main {
     padding: 20px;
     max-width: 90%;
     margin: 0 auto;
-    margin-top: 70vh;  /* 上边距为视口高度的%，自动适配 */
+    margin-top: 50vh;  /* 上边距为视口高度的%，自动适配 */
 }
 
 /* 单个卡片样式 */
