@@ -474,7 +474,7 @@ body.sub-page {
     background: rgba(255, 255, 255, 0.92);
     border-radius: 0;
     max-width: 100%;
-    padding: 2vh 5vw;
+    padding: 0.5vh 5vw;
     box-shadow: none;
     flex: 1;
 }
