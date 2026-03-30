@@ -59,12 +59,10 @@ body.sub-page {
         overflow: hidden;
     }
 }
-
 main {
     background: transparent;
     width: 100%;
 }
-
 /* 卡片容器 - 横向排列 */
 .cards-container {
     display: flex;
@@ -78,7 +76,6 @@ main {
     margin: 0 auto;
     margin-top: 40vh;  /* 上边距为视口高度的%，自动适配 */
 }
-
 /* 单个卡片样式 */
 .card {
     width: 12vw;
@@ -97,12 +94,10 @@ main {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     border: 1px solid #e0e0e0;
 }
-
 .card:hover {
     transform: translateY(-12px);
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.25);
 }
-
 .card h3 {
     font-size: 1.2vw;
     font-weight: bold;
@@ -110,7 +105,6 @@ main {
     min-font-size: 14px;
     margin-bottom: 0.5rem;
 }
-
 .card p {
     font-size: 0.8vw;
     color: #666;
@@ -121,13 +115,11 @@ main {
 
 
 /* ========== 内容页面样式 ========== */
-
 /* 返回首页的导航链接 */
 .page-nav {
     text-align: right;
     margin-top: 10px;
 }
-
 .page-nav a {
     color: white;
     text-decoration: none;
@@ -137,11 +129,9 @@ main {
     font-size: 0.9rem;
     transition: background 0.3s;
 }
-
 .page-nav a:hover {
     background: rgba(255, 255, 255, 0.3);
 }
-
 /* 内容页面的 main 区域 */
 .content-page {
     background: rgba(255, 255, 255, 0.92);
@@ -151,14 +141,12 @@ main {
     padding: 30px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
-
 .content-page h2 {
     color: #1e466e;
     border-bottom: 3px solid #1e466e;
     padding-bottom: 10px;
     margin-bottom: 25px;
 }
-
 /* 研究动态列表样式 */
 #news-links li {
     margin: 15px 0;
@@ -167,12 +155,10 @@ main {
     border-radius: 12px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
-
 #news-links li:hover {
     transform: translateX(5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-
 #news-links a {
     text-decoration: none;
     color: #1e466e;
@@ -180,7 +166,6 @@ main {
     font-weight: 500;
     display: block;
 }
-
 #news-links a:hover {
     color: #0077b6;
 }
@@ -193,12 +178,10 @@ main {
     border-radius: 12px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
-
 #documents p:hover {
     transform: translateX(5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-
 #documents a {
     text-decoration: none;
     color: #1e466e;
@@ -206,17 +189,14 @@ main {
     font-weight: 500;
     display: block;
 }
-
 #documents a:hover {
     color: #0077b6;
 }
-
 /* 图片容器样式 */
 .content-page .image-container {
     margin: 20px 0;
     text-align: center;
 }
-
 .content-page .image-container img {
     max-width: 100%;
     height: auto;
@@ -495,7 +475,7 @@ body.sub-page {
     background: rgba(255, 255, 255, 0.92);
     border-radius: 0;
     max-width: 100%;
-    padding: 40px 20px;
+    padding: 2vh 5vw;
     box-shadow: none;
     flex: 1;
 }
