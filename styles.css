@@ -17,7 +17,22 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
+     /* 添加动画：背景图从上到下飞入 */
+    animation: bgFlyIn 0.8s ease-out forwards;
 }
+/* 定义背景图飞入动画 */
+@keyframes bgFlyIn {
+    0% {
+        background-position: center -100vh;  /* 从顶部外开始 */
+        opacity: 0;
+    }
+    100% {
+        background-position: center center;  /* 到达正常位置 */
+        opacity: 1;
+    }
+}
+
 
 /* 桌面端（宽度大于 768px）时禁止滚动 */
 @media (min-width: 769px) {
