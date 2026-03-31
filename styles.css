@@ -13,10 +13,12 @@ body {
     background-position: center center;
     background-attachment: fixed;
     background-repeat: no-repeat;
+    
     /* 使用 flex 布局 */
     display: flex;
     align-items: center;
     justify-content: center;
+
      /* 添加动画：背景图从上到下飞入 */
     animation: bgFlyIn 1s ease-out forwards;
 }
@@ -40,26 +42,9 @@ body {
         overflow: hidden;
     }
 }
-
 main {
     background: transparent;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-/* 首页（body 没有 sub-page 类） */
-body:not(.sub-page) main {
-    justify-content: center;  /* 垂直居中 */
-    min-height: 100vh;
-}
-/* 子页面 main 样式 */
-body.sub-page main {
-    justify-content: flex-start;
-    min-height: auto;
-}
-
-
 }
 /* 卡片容器 - 横向排列 */
 .cards-container {
@@ -319,12 +304,14 @@ body.sub-page {
     text-align: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
+
 .sub-header h1 {
     margin: 0;
     font-size: 1.6rem;
     font-weight: 500;
     letter-spacing: 1px;
 }
+
 .sub-header-subtitle {
     margin: 8px 0 0 0;
     font-size: 0.85rem;
@@ -398,37 +385,97 @@ footer {
 }
 
 
-/* ========== 研究动态页面：上下布局 ========== */
-/* 每个板块占满宽度 */
-.dynamic-section {
-    width: 100%;
-    margin-bottom: 5vh;  /* 上下板块之间的间距 */
+/* ========== 研究动态页面：左右两栏布局 ========== */
+/* 两栏容器 */
+.two-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15vw;
+    justify-content: space-between;
 }
-.dynamic-section:last-child {
-    margin-bottom: 0;
+/* 每个板块占一半宽度 */
+.dynamic-section {
+    flex: 1;
+    min-width: 260px;  /* 最小宽度，防止太窄时变形 */
 }
 /* 板块标题样式 */
 .dynamic-section h2 {
     color: black;
     border-bottom: 0.2vw solid black;
-    padding-bottom: 2vh;
-    margin-bottom: 3vh;
-    font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+    padding-bottom: 2vh;  /* 下边距为视口高度的% */
+    margin-bottom: 3vh;   /* 标题与内容间距为视口高度的% */
+    font-size: clamp(1.1rem, 2.3vw, 1.6rem);  /* 动态字体 */
     font-weight: 500;
 }
+/* 列表样式 */
+#news-links,
+#interview-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+/* 列表项样式 */
+#news-links li,
+#interview-links li {
+    margin: 1.5vh 0;             /* 条目上下间距为视口高度的1.5% */
+    padding: 1.2vh 1.5vw;        /* 内边距：上下用vh，左右用vw */
+    background: #fcf5eb;         /* 背景颜色 * / 
+    border-radius: 1.2vw;        /* 圆角为视口宽度的1.2% */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+/* 链接文字样式 */
+#news-links a,
+#interview-links a {
+    text-decoration: none;
+    color: black;
+    font-size: clamp(0.85rem, 1.2vw, 1rem);  /* 动态字体：最小0.85rem，最大1rem */
+    font-weight: 500;
+    display: block;
+}
+/* 悬浮效果 */
+#news-links li:hover,
+#interview-links li:hover {
+    transform: translateX(0.5vw);           /* 悬浮移动距离为视口宽度的0.5% */
+    box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.1);  /* 阴影用vh单位 */
+}
+/* 链接悬浮颜色 */
+#news-links a:hover,
+#interview-links a:hover {
+        color: black;
+}
+/* 暂无内容提示样式 */
+.empty-tip {
+    color: #999;
+    text-align: center;
+    padding: 3vh 2vw !important;           /* 内边距比例化 */
+    background: #fcf5eb !important;
+    font-style: italic;
+    font-size: clamp(0.8rem, 1vw, 0.9rem); /* 动态字体 */
+}
 
-/* ========== 会议资讯卡片：左右排列，水平靠左 ========== */
+/* 手机端适配：小屏幕时变为上下排列 */
+@media (max-width: 768px) {
+    .two-columns {
+        flex-direction: column;
+        gap: 5vh;                          /* 手机端间距用视口高度 */
+    }
+    .dynamic-section {
+        min-width: auto;
+    }
+    /* 手机端圆角稍小 */
+    #news-links li,
+    #interview-links li {
+        border-radius: 3vw;
+    }
+}
+
+/* 会议资讯卡片样式 */
 .news-cards-container {
     display: flex;
-    flex-direction: row;       /* 左右排列 */
-    flex-wrap: wrap;           /* 换行 */
-    gap: 2rem;                 /* 卡片之间的间距 */
-    justify-content: flex-start;  /* 水平靠左 */
+    flex-direction: column;
+    gap: 2rem;
 }
-/* 卡片固定宽度和大小 */
 .news-card {
-    width: 280px;              /* 固定宽度 */
-    flex-shrink: 0;            /* 不收缩 */
     background: #ffffff;
     border-radius: 12px;
     overflow: hidden;
@@ -436,80 +483,30 @@ footer {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
-/* 卡片图片固定高度 */
+.news-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
 .card-image {
     width: 100%;
-    height: 160px;             /* 固定高度 */
+    height: 180px;
     overflow: hidden;
     background-color: #f5f5f5;
 }
 .card-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;         /* 图片裁剪适应 */
+    object-fit: cover;
     transition: transform 0.3s ease;
 }
-
-/* 卡片标题 */
+.news-card:hover .card-image img {
+    transform: scale(1.03);
+}
 .card-title {
-    padding: 0.8rem 1rem;
-    font-size: 0.9rem;
+    padding: 1rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #1e466e;
     line-height: 1.4;
     background: white;
-}
-
-/* 悬浮效果 */
-.news-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.news-card:hover .card-image img {
-    transform: scale(1.03);
-}
-
-/* ========== 调研访谈列表：左右排列，水平靠左 ========== */
-#interview-links {
-    display: flex;
-    flex-direction: row;       /* 左右排列 */
-    flex-wrap: wrap;           /* 换行 */
-    gap: 1.5rem;               /* 列表项之间的间距 */
-    justify-content: flex-start;  /* 水平靠左 */
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-/* 列表项固定宽度 */
-#interview-links li {
-    width: 260px;              /* 固定宽度 */
-    margin: 0;                 /* 移除上下边距，用gap控制 */
-    padding: 1.2vh 1.5vw;
-    background: #fcf5eb;
-    border-radius: 1.2vw;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-/* 链接文字 */
-#interview-links a {
-    text-decoration: none;
-    color: black;
-    font-size: clamp(0.85rem, 1.2vw, 1rem);
-    font-weight: 500;
-    display: block;
-}
-/* 悬浮效果 */
-#interview-links li:hover {
-    transform: translateX(0.5vw);
-    box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.1);
-}
-/* 暂无内容提示 */
-.empty-tip {
-    color: #999;
-    text-align: center;
-    padding: 3vh 2vw !important;
-    background: #fcf5eb !important;
-    font-style: italic;
-    font-size: clamp(0.8rem, 1vw, 0.9rem);
-    width: 100%;               /* 占满整行 */
 }
