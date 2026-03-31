@@ -187,91 +187,6 @@ main {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* ========== 研究动态页面：左右两栏布局 ========== */
-/* 两栏容器 */
-.two-columns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15vw;
-    justify-content: space-between;
-}
-/* 每个板块占一半宽度 */
-.dynamic-section {
-    flex: 1;
-    min-width: 260px;  /* 最小宽度，防止太窄时变形 */
-}
-/* 板块标题样式 */
-.dynamic-section h2 {
-    color: black;
-    border-bottom: 0.2vw solid black;
-    padding-bottom: 2vh;  /* 下边距为视口高度的% */
-    margin-bottom: 3vh;   /* 标题与内容间距为视口高度的% */
-    font-size: clamp(1.1rem, 2.3vw, 1.6rem);  /* 动态字体 */
-    font-weight: 500;
-}
-/* 列表样式 */
-#news-links,
-#interview-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-/* 列表项样式 */
-#news-links li,
-#interview-links li {
-    margin: 1.5vh 0;             /* 条目上下间距为视口高度的1.5% */
-    padding: 1.2vh 1.5vw;        /* 内边距：上下用vh，左右用vw */
-    background: #fcf5eb;         /* 背景颜色 * / 
-    border-radius: 1.2vw;        /* 圆角为视口宽度的1.2% */
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-/* 链接文字样式 */
-#news-links a,
-#interview-links a {
-    text-decoration: none;
-    color: black;
-    font-size: clamp(0.85rem, 1.2vw, 1rem);  /* 动态字体：最小0.85rem，最大1rem */
-    font-weight: 500;
-    display: block;
-}
-/* 悬浮效果 */
-#news-links li:hover,
-#interview-links li:hover {
-    transform: translateX(0.5vw);           /* 悬浮移动距离为视口宽度的0.5% */
-    box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.1);  /* 阴影用vh单位 */
-}
-/* 链接悬浮颜色 */
-#news-links a:hover,
-#interview-links a:hover {
-        color: black;
-}
-/* 暂无内容提示样式 */
-.empty-tip {
-    color: #999;
-    text-align: center;
-    padding: 3vh 2vw !important;           /* 内边距比例化 */
-    background: #fcf5eb !important;
-    font-style: italic;
-    font-size: clamp(0.8rem, 1vw, 0.9rem); /* 动态字体 */
-}
-
-/* 手机端适配：小屏幕时变为上下排列 */
-@media (max-width: 768px) {
-    .two-columns {
-        flex-direction: column;
-        gap: 5vh;                          /* 手机端间距用视口高度 */
-    }
-    .dynamic-section {
-        min-width: auto;
-    }
-    /* 手机端圆角稍小 */
-    #news-links li,
-    #interview-links li {
-        border-radius: 3vw;
-    }
-}
-
-
 /* ========== 主页底部文字样式 ========== */
 /* 调整 main 的布局，让内容从上到下排列 */
 main {
@@ -480,4 +395,131 @@ footer {
     color: white;
     width: 100%;
     margin-top: auto;
+}
+
+
+/* ========== 研究动态页面：左右两栏布局 ========== */
+/* 两栏容器 */
+.two-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15vw;
+    justify-content: space-between;
+}
+/* 每个板块占一半宽度 */
+.dynamic-section {
+    flex: 1;
+    min-width: 260px;  /* 最小宽度，防止太窄时变形 */
+}
+/* 板块标题样式 */
+.dynamic-section h2 {
+    color: black;
+    border-bottom: 0.2vw solid black;
+    padding-bottom: 2vh;  /* 下边距为视口高度的% */
+    margin-bottom: 3vh;   /* 标题与内容间距为视口高度的% */
+    font-size: clamp(1.1rem, 2.3vw, 1.6rem);  /* 动态字体 */
+    font-weight: 500;
+}
+/* 列表样式 */
+#news-links,
+#interview-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+/* 列表项样式 */
+#news-links li,
+#interview-links li {
+    margin: 1.5vh 0;             /* 条目上下间距为视口高度的1.5% */
+    padding: 1.2vh 1.5vw;        /* 内边距：上下用vh，左右用vw */
+    background: #fcf5eb;         /* 背景颜色 * / 
+    border-radius: 1.2vw;        /* 圆角为视口宽度的1.2% */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+/* 链接文字样式 */
+#news-links a,
+#interview-links a {
+    text-decoration: none;
+    color: black;
+    font-size: clamp(0.85rem, 1.2vw, 1rem);  /* 动态字体：最小0.85rem，最大1rem */
+    font-weight: 500;
+    display: block;
+}
+/* 悬浮效果 */
+#news-links li:hover,
+#interview-links li:hover {
+    transform: translateX(0.5vw);           /* 悬浮移动距离为视口宽度的0.5% */
+    box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.1);  /* 阴影用vh单位 */
+}
+/* 链接悬浮颜色 */
+#news-links a:hover,
+#interview-links a:hover {
+        color: black;
+}
+/* 暂无内容提示样式 */
+.empty-tip {
+    color: #999;
+    text-align: center;
+    padding: 3vh 2vw !important;           /* 内边距比例化 */
+    background: #fcf5eb !important;
+    font-style: italic;
+    font-size: clamp(0.8rem, 1vw, 0.9rem); /* 动态字体 */
+}
+
+/* 手机端适配：小屏幕时变为上下排列 */
+@media (max-width: 768px) {
+    .two-columns {
+        flex-direction: column;
+        gap: 5vh;                          /* 手机端间距用视口高度 */
+    }
+    .dynamic-section {
+        min-width: auto;
+    }
+    /* 手机端圆角稍小 */
+    #news-links li,
+    #interview-links li {
+        border-radius: 3vw;
+    }
+}
+
+/* 会议资讯卡片样式 */
+.news-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.news-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.news-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+.card-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.news-card:hover .card-image img {
+    transform: scale(1.03);
+}
+.card-title {
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1e466e;
+    line-height: 1.4;
+    background: white;
 }
