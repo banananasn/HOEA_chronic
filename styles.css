@@ -197,7 +197,6 @@ main {
     align-items: center;
     min-height: 100vh;
 }
-
 /* 底部文字容器 */
 /* 底部文字容器 */
 .home-footer {
@@ -241,7 +240,6 @@ main {
         align-items: center;                /* 垂直居中 */
         justify-content: flex-end;  /* 水平靠右 */
     }
-
     /* 卡片容器：竖向排列，整体靠右 */
     .cards-container {
         flex-direction: column;
@@ -250,7 +248,6 @@ main {
         padding: 5vw;                /* 左右内边距为视口宽度的5% */
         align-items: flex-end;              /* 卡片容器内的卡片靠右对齐 */
     }
-
    .card {
         width: 32vw;                /* 宽度为视口宽度的32% */
         height: 25vw;               /* 高度为宽度的78%左右（保持矩形） */
@@ -259,17 +256,14 @@ main {
         min-height: 85px;
         max-height: 125px;
     }
-
     .card h3 {
         font-size: clamp(0.9rem, 4vw, 1.2rem);  /* 动态字体：最小0.9rem，最大1.2rem */
         margin-bottom: 0.5vh;                   /* 下边距为视口高度的0.5% */;
     }
-
     .card p {
         font-size: clamp(0.65rem, 2.5vw, 0.8rem); /* 动态字体 */
         padding: 0 8px;
     }
-
     /* 底部文字：固定在底部，不随内容滚动 */
     .home-footer {
         position: absolute;
@@ -280,11 +274,9 @@ main {
         font-size: 0.6rem;
         text-align: center;
     }
-
     .home-footer p {
         margin: 2px 0;
     }
-
     /* 底部链接颜色保持不变 */
     .home-footer a {
         color: black;
@@ -326,7 +318,7 @@ body.sub-page {
     opacity: 0.8;
 }
 
-/* ========== 导航栏样式（保留原有好看的样式，调整为粘性定位） ========== */
+/* ========== 导航栏样式 ========== */
 .sub-nav {
     position: sticky;
     top: 0;
@@ -338,7 +330,6 @@ body.sub-page {
     z-index: 1000;
     padding: 12px 0;
 }
-
 .sub-nav-container {
     display: flex;
     justify-content: center;
@@ -347,7 +338,6 @@ body.sub-page {
     margin: 0 auto;
     padding: 0 20px;
 }
-
 .sub-nav-item {
     font-size: 1rem;
     font-weight: 500;
@@ -357,12 +347,10 @@ body.sub-page {
     border-radius: 30px;
     transition: all 0.3s ease;
 }
-
 .sub-nav-item:hover {
     background: #f0f0f0;
     color: #8B0000;
 }
-
 .sub-nav-item.active {
     background: #8B0000;
     color: white;
@@ -373,12 +361,11 @@ body.sub-page {
     background: rgba(255, 255, 255, 0.92);
     border-radius: 0;
     max-width: 100%;
-    padding: 2vh 5vw;              /*上边距与左右边距*/
+    padding: 5vh 5vw;              /*上边距与左右边距*/
     margin-top: 0;               /* 确保没有上边距 */
     box-shadow: none;
     flex: 0 0 auto;              /* 不拉伸，保持内容高度 */
 }
-
 .sub-page-content h2,
 .sub-page-content ul,
 .sub-page-content div {
