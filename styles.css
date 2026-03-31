@@ -59,8 +59,6 @@ body.sub-page main {
     min-height: auto;
 }
 
-
-}
 /* 卡片容器 - 横向排列 */
 .cards-container {
     display: flex;
@@ -432,7 +430,7 @@ footer {
 #interview-links li {
     margin: 1.5vh 0;             /* 条目上下间距为视口高度的1.5% */
     padding: 1.2vh 1.5vw;        /* 内边距：上下用vh，左右用vw */
-    background: #fcf5eb;         /* 背景颜色 * / 
+    background: #fcf5eb;         /* 背景颜色 */ 
     border-radius: 1.2vw;        /* 圆角为视口宽度的1.2% */
     transition: transform 0.2s, box-shadow 0.2s;
 }
