@@ -48,15 +48,14 @@ const documents = [
       image："images/陈玺玥-川大学报.png" }
 ];
 // 动态填充研究成果文档
-function loadNewsCards() {
-    const container = document.getElementById('news-cards');
+function loadDocuments() {
+    const container = document.getElementById('documents');
     if (!container) return;
     
-    newsCardsData.forEach(item => {
+    documents.forEach(item => {
         const card = document.createElement('div');
         card.className = 'news-card';
-        card.onclick = () => window.location.href = item.url;
-        
+        card.onclick = () => window.open(item.url, '_blank');
         card.innerHTML = `
             <div class="card-image">
                 <img src="${item.image}" alt="${item.title}">
