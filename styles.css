@@ -529,53 +529,68 @@ footer {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem;
+    gap: 2vw;                  /* 间距为视口宽度的2% */
     margin-top: 3vh;
 }
-/* 每个单位独立包装 */
+/* 每个单位独立包装 - 比例宽度 */
 .partner-card-wrapper {
-    width: 260px;
+    width: 22vw;               /* 宽度为视口宽度的22% */
+    min-width: 220px;          /* 最小宽度，防止过小 */
+    max-width: 300px;          /* 最大宽度，防止过大 */
     display: flex;
     flex-direction: column;
 }
-/* 悬浮窗卡片 */
+/* 悬浮窗卡片 - 比例高度 */
 .partner-card {
     background: #ffffff;
-    border-radius: 16px;
+    border-radius: 1.2vw;      /* 圆角比例化 */
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.1);
     border: 1px solid #e8e8e8;
     overflow: hidden;
+    height: 14vh;              /* 高度为视口高度的14% */
+    min-height: 100px;         /* 最小高度 */
+    max-height: 140px;         /* 最大高度 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .partner-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-0.8vh);
+    box-shadow: 0 1.5vh 3vh rgba(0, 0, 0, 0.15);
 }
 .partner-card h3 {
     background: linear-gradient(135deg, #8B0000, #a52a2a);
     color: white;
-    padding: 1rem;
+    padding: 1.2vh 0.8vw;
     margin: 0;
-    font-size: 1rem;
+    font-size: clamp(0.85rem, 1.2vw, 1rem);  /* 动态字体 */
     font-weight: 600;
     text-align: center;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.3;
 }
 /* 三行文字链接区域 */
 .partner-links {
-    margin-top: 0.8rem;
+    margin-top: 1vh;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.6vh;
+    width: 100%;
 }
 .link-item {
     display: block;
-    padding: 0.4rem 0.8rem;
+    padding: 0.6vh 0.8vw;
     background: #f8f9fa;
-    border-radius: 8px;
+    border-radius: 0.8vw;
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 0.9vw, 0.85rem);
     color: #333;
     transition: all 0.2s ease;
     text-align: center;
@@ -583,9 +598,9 @@ footer {
 .link-item:hover {
     background: #8B0000;
     color: white;
-    transform: translateX(4px);
+    transform: translateX(0.3vw);
 }
-}
+
 
 /* ========== 研究成果卡片样式 ========== */
 .results-cards-container {
