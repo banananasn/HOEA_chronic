@@ -13,11 +13,10 @@ body {
     background-position: center center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    
     /* 使用 flex 布局 */
-    display: flex;;
+    display: flex;
+    align-items: center;
     justify-content: center;
-
      /* 添加动画：背景图从上到下飞入 */
     animation: bgFlyIn 1s ease-out forwards;
 }
@@ -41,15 +40,33 @@ body {
         overflow: hidden;
     }
 }
+
 main {
     background: transparent;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* 首页（body 没有 sub-page 类） */
+body:not(.sub-page) main {
+    justify-content: center;  /* 垂直居中 */
+    min-height: 100vh;
+}
+/* 子页面 main 样式 */
+body.sub-page main {
+    justify-content: flex-start;
+    min-height: auto;
+}
+
+
 }
 /* 卡片容器 - 横向排列 */
 .cards-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
     gap: 5vw;
     padding: 20px;
@@ -302,14 +319,12 @@ body.sub-page {
     text-align: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
-
 .sub-header h1 {
     margin: 0;
     font-size: 1.6rem;
     font-weight: 500;
     letter-spacing: 1px;
 }
-
 .sub-header-subtitle {
     margin: 8px 0 0 0;
     font-size: 0.85rem;
