@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研究动态 - 整合式智慧慢病管理模式研究</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="sub-page">
+
+    <!-- 版头（在导航栏上方） -->
+    <header class="sub-header">
+        <h1>整合式智慧慢病管理模式研究</h1>
+        <p class="sub-header-subtitle">国家科技重大专项课题</p>
+    </header>
+
+    <!-- 固定导航栏 -->
+    <nav class="sub-nav">
+        <div class="sub-nav-container">
+            <a href="index.html" class="sub-nav-item">首页</a>
+            <a href="trends.html" class="sub-nav-item">研究动态</a>
+            <a href="results.html" class="sub-nav-item">研究成果</a>
+            <a href="plan.html" class="sub-nav-item">研究计划</a>
+            <a href="teams.html" class="sub-nav-item">合作单位</a>
+            <a href="teams.html" class="sub-nav-item active">课题成员</a>
+        </div>
+    </nav>
+
+    <!-- 页面主要内容 -->
+ <main class="sub-page-content">
+        <h2>课题参与人员</h2>
+        <div class="image-container">
+            <img src="images/BB.jpg" alt="课题参与单位和人员" style="width: 100%;" />
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>&copy;国家科技重大专项“重大慢病防治技术推广机制研究及应用示范”课题“整合式智慧慢病管理模式研究”（编号：2024ZD0523902）@四川大学华西公共卫生学院</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
