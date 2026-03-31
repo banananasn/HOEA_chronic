@@ -221,7 +221,7 @@ main {
 #interview-links li {
     margin: 1.5vh 0;             /* 条目上下间距为视口高度的1.5% */
     padding: 1.2vh 1.5vw;        /* 内边距：上下用vh，左右用vw */
-    background: #f8f9fa;         /* 背景颜色：#f8f9fa* / 
+    background: #fcf5eb;         /* 背景颜色 * / 
     border-radius: 1.2vw;        /* 圆角为视口宽度的1.2% */
     transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -250,7 +250,7 @@ main {
     color: #999;
     text-align: center;
     padding: 3vh 2vw !important;           /* 内边距比例化 */
-    background: #f5f5f5 !important;
+    background: #fcf5eb !important;
     font-style: italic;
     font-size: clamp(0.8rem, 1vw, 0.9rem); /* 动态字体 */
 }
