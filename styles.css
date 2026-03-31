@@ -279,7 +279,6 @@ main {
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
@@ -459,12 +458,10 @@ body.sub-page {
     background: rgba(255, 255, 255, 0.92);
     border-radius: 0;
     max-width: 100%;
-    padding: 0 5vw;              /* 上边距为0 */
+    padding: 2vh 5vw;              /*上边距与左右边距*/
     margin-top: 0;               /* 确保没有上边距 */
     box-shadow: none;
     flex: 0 0 auto;              /* 不拉伸，保持内容高度 */
-    max-height: 80vh;            /* 限制最大高度为视口的70% */
-    overflow-y: auto;            /* 内容超出时滚动 */
 }
 
 .sub-page-content h2,
