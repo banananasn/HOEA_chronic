@@ -522,6 +522,60 @@ footer {
     background: white;
 }
 
+/* ========== 合作单位卡片样式 ========== */
+/* 卡片容器 */
+.partners-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3vh;
+}
+/* 单个卡片样式 */
+.partner-card {
+    width: 280px;
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e8e8e8;
+}
+.partner-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+/* 卡片标题 */
+.partner-card h3 {
+    background: linear-gradient(135deg, #8B0000, #a52a2a);
+    color: white;
+    padding: 1rem;
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 1px;
+}
+/* 卡片内容区域 */
+.partner-info {
+    padding: 1rem;
+}
+.partner-info p {
+    margin: 0.8rem 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #333;
+}
+.partner-info p strong {
+    color: #8B0000;
+    font-weight: 600;
+    display: inline-block;
+    min-width: 70px;
+}
+}
+
 /* ========== 研究成果卡片样式 ========== */
 .results-cards-container {
     display: flex;
