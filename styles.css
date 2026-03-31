@@ -516,22 +516,24 @@ footer {
     gap: 2vw;
     margin-top: 3vh;
 }
-/* 每个单位独立包装 - 固定比例宽度 */
+/* 每个单位独立包装 */
 .partner-card-wrapper {
-    width: 22vw;               /* 固定宽度比例 */
-    min-width: 220px;          /* 最小宽度 */
-    max-width: 280px;          /* 最大宽度，防止过宽 */
+    width: 22vw;
+    min-width: 220px;
+    max-width: 280px;
     display: flex;
     flex-direction: column;
 }
-/* 悬浮窗卡片 - 固定比例高度 */
+/* 悬浮窗卡片 - 带背景图 */
 .partner-card {
-    background: #ffffff;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     border-radius: 1.2vw;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.1);
-    border: 1px solid #e8e8e8;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     overflow: hidden;
     height: 14vh;
     min-height: 100px;
@@ -539,14 +541,29 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;               /* 占满父容器宽度 */
+    width: 100%;
+    position: relative;
+}
+/* 半透明遮罩层 - 让文字更清晰 */
+.partner-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);  /* 黑色半透明，可调整 */
+    border-radius: 1.2vw;
+    z-index: 1;
 }
 .partner-card:hover {
     transform: translateY(-0.8vh);
     box-shadow: 0 1.5vh 3vh rgba(0, 0, 0, 0.15);
 }
+/* 卡片内的文字 */
 .partner-card h3 {
-    background: linear-gradient(135deg, #8B0000, #a52a2a);
+    position: relative;
+    z-index: 2;
     color: white;
     padding: 1.2vh 0.8vw;
     margin: 0;
@@ -560,15 +577,16 @@ footer {
     align-items: center;
     justify-content: center;
     line-height: 1.3;
-    word-break: break-word;    /* 长词换行 */
+    word-break: break-word;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
-/* 三行文字链接区域 - 与卡片同宽 */
+/* 三行文字链接区域 */
 .partner-links {
     margin-top: 1vh;
     display: flex;
     flex-direction: column;
     gap: 0.6vh;
-    width: 100%;               /* 与悬浮窗同宽 */
+    width: 100%;
 }
 .link-item {
     display: block;
@@ -580,11 +598,6 @@ footer {
     color: #333;
     transition: all 0.2s ease;
     text-align: center;
-    white-space: nowrap;        /* 文字不换行 */
-    overflow-x: auto;           /* 内容过长可滚动 */
-}
-/* 如果文字过长，允许换行 */
-.link-item {
     white-space: normal;
     word-break: break-word;
 }
