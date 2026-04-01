@@ -380,17 +380,15 @@
         </div>
     </nav>
 
-    <main class="sub-page-content">
-        <!-- 右上角按钮 -->
-        <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-            <div style="display: flex; gap: 1rem;">
-                <button onclick="window.location.href='teams.html'" class="back-button">← 返回合作单位</button>
-                <button class="add-result-btn" onclick="openAddResultModal()">✚ 添加新成果</button>
-            </div>
-        </div>
-
+     <main class="sub-page-content" style="position: relative;">
         <!-- 标题 -->
-        <h2 style="text-align: center;">四川省医学科学院·四川省人民医院 - 项目成果</h2>
+        <h2 style="text-align: center; margin-bottom: 1rem;">四川省医学科学院·四川省人民医院 - 项目成果</h2>
+
+        <!-- 右上角按钮 - 绝对定位在角落 -->
+        <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 1rem;">
+            <button onclick="window.location.href='teams.html'" class="back-button">← 返回合作单位</button>
+            <button class="add-result-btn" onclick="openAddResultModal()">✚ 添加新成果</button>
+        </div>
         
         <!-- 板块一：在研成果 -->
         <div class="research-section">
