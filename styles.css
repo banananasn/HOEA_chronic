@@ -533,11 +533,11 @@ footer {
 }
 .link-item {
     display: block;
-    padding: 0.8vh 0.6vw;
+    padding: 1.4vh 1vw;
     background: #f8f9fa;
     border-radius: 0.8vw;
     text-decoration: none;
-    font-size: clamp(0.9rem, 1vw, 1rem);
+    font-size: clamp(1rem, 1.3vw, 1.5rem);
     color: #333;
     transition: all 0.2s ease;
     text-align: center;
