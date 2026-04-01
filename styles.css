@@ -658,23 +658,25 @@ footer {
     background: white;
 }
 
-
 /* ========== 项目人员页面：左侧图片 + 右侧成员列表 ========== */
 
 .members-container {
     display: flex;
-    flex-direction: row;        /* 左右排列 */
+    flex-direction: row;
     flex-wrap: wrap;
-    gap: 3rem;
+    gap: 2rem;
     margin-top: 2vh;
-    align-items: flex-start;
+    align-items: center;        /* 改为 center，让图片和文字垂直居中 */
 }
 
-/* 左侧图片区域 - 比例大小 */
+/* 左侧图片区域 */
 .members-image {
-    flex: 1;                    /* 占据剩余空间 */
-    max-width: 35%;             /* 最大宽度不超过35% */
-    min-width: 250px;
+    flex: 0 0 40%;
+    min-width: 280px;
+    max-width: 450px;
+    display: flex;
+    justify-content: center;    /* 图片水平居中 */
+    align-items: center;        /* 图片垂直居中 */
 }
 
 .members-image img {
@@ -686,31 +688,53 @@ footer {
 
 /* 右侧成员列表区域 */
 .members-list {
-    flex: 2;                    /* 占据2倍空间 */
-    min-width: 280px;
+    flex: 1;
+    min-width: 260px;
 }
 
 /* 单个成员项 */
 .member-item {
-    padding: 0.8rem 1rem;
-    margin-bottom: 0.8rem;
+    padding: 0.5rem 0.8rem;
+    margin-bottom: 0.5rem;
     background: #f8f9fa;
-    border-radius: 12px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    line-height: 1.5;
-    font-size: clamp(0.85rem, 1vw, 0.95rem);
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    line-height: 1.4;
+    font-size: 0.9rem;
     color: #333;
+    border-left: 3px solid #8B0000;
 }
 
 .member-item:hover {
     transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .member-item strong {
     color: #8B0000;
-    font-size: clamp(0.9rem, 1.05vw, 1rem);
+    font-size: 0.95rem;
     display: inline-block;
     min-width: 70px;
+    font-weight: 600;
+}
+
+/* 手机端适配 */
+@media (max-width: 768px) {
+    .members-container {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;    /* 手机端居中 */
+    }
+    
+    .members-image {
+        flex: 0 0 auto;
+        width: 80%;
+        margin: 0 auto;
+    }
+    
+    .member-item {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
+    }
 }
