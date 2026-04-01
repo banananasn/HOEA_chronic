@@ -104,3 +104,12 @@ if (document.getElementById('results-cards')) {
 if (document.getElementById("interview-links")) {
     loadInterviewLinks();
 }
+
+// 查看当前有哪些成果
+console.log(localStorage.getItem('ongoingResults'));
+console.log(localStorage.getItem('outputResults'));
+
+// 清空成果数据
+localStorage.removeItem('ongoingResults');
+localStorage.removeItem('outputResults');
+location.reload();
