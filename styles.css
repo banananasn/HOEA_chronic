@@ -479,7 +479,7 @@ footer {
     box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     overflow: hidden;
-    height: 14vh;
+    height: 12vh;
     min-height: 100px;
     max-height: 130px;
     display: flex;
