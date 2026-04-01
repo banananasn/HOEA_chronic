@@ -684,8 +684,8 @@ footer {
 }
 /* 右侧成员列表区域 */
 .members-list {
-    flex: 3;
-    min-width: 300px;
+    flex: 2;
+    min-width: 400px;
 }
 /* 单个成员项 */
 .member-item {
