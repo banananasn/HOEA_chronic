@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目成果 - 四川省肿瘤医院 | 整合式智慧慢病管理模式研究</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 成果卡片增强样式 */
+        .results-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2vw;
+            justify-content: flex-start;
+            margin: 2vh 0;
+            min-height: 200px;
+        }
+
+        .result-card {
+            flex: 1;
+            min-width: 240px;
+            max-width: 280px;
+            background: #fff;
+            border-radius: 1.2vw;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            position: relative;
+        }
+
+        .result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        /* 删除按钮 - 悬停时显示 */
+        .delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(139, 0, 0, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .result-card:hover .delete-btn {
+            opacity: 1;
+        }
+
+        .delete-btn:hover {
+            background: #ff0000;
+            transform: scale(1.05);
+        }
+
+        .card-image {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #f0f2f5;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .result-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        /* 空状态占位样式 */
+        .empty-state {
+            width: 100%;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #999;
+            background: #fafafa;
+            border-radius: 1vw;
+            border: 1px dashed #ddd;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            font-size: 0.9rem;
+        }
+
+        .card-title {
+            padding: 1rem;
+            font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+            font-weight: 500;
+            color: #333;
+            line-height: 1.4;
+            text-align: center;
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+
+        /* 研究板块样式 */
+        .research-section {
+            margin-bottom: 4vh;
+        }
+
+        .section-title {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            color: #8B0000;
+            border-left: 0.3vw solid #8B0000;
+            padding-left: 1vw;
+            margin: 2vh 0 2vh 0;
+            border-bottom-color: #8B0000 !important;
+        }
+
+        /* 返回按钮样式 */
+        .back-button {
+            background: #6c757d;
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        /* 添加成果按钮 */
+        .add-result-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #8B0000;
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .add-result-btn:hover {
+            background: #a00000;
+            transform: translateY(-2px);
+        }
+
+        /* 管理员登录模态框 */
+        .admin-login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-login-modal.active {
+            display: flex;
+        }
+
+        .admin-login-content {
+            background: #fff;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .admin-login-content h3 {
+            margin: 0 0 1rem 0;
+            color: #8B0000;
+        }
+
+        .admin-login-content input {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-login-content button {
+            width: 100%;
+            padding: 0.8rem;
+            background: #8B0000;
+            color: #fff;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-login-content button.cancel-btn {
+            background: #6c757d;
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #8B0000;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-group input[type="file"] {
+            padding: 0.4rem;
+        }
+
+        .image-preview {
+            margin-top: 0.5rem;
+            max-width: 100%;
+            max-height: 150px;
+            display: none;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: auto;
+        }
+
+        .submit-btn {
+            background: #8B0000;
+            color: #fff;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: #a00000;
+        }
+
+        /* 管理员模式指示器 */
+        .admin-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #8B0000;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .admin-badge:hover {
+            background: #a00000;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .results-cards-container {
+                gap: 1rem;
+                justify-content: center;
+            }
+            
+            .result-card {
+                min-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body class="sub-page">
+
+    <header class="sub-header">
+        <h1>整合式智慧慢病管理模式研究</h1>
+        <p class="sub-header-subtitle">国家科技重大专项课题</p>
+    </header>
+
+    <nav class="sub-nav">
+        <div class="sub-nav-container">
+            <a href="index.html" class="sub-nav-item">首页</a>
+            <a href="trends.html" class="sub-nav-item">研究动态</a>
+            <a href="results.html" class="sub-nav-item">研究成果</a>
+            <a href="plan.html" class="sub-nav-item">研究计划</a>
+            <a href="teams.html" class="sub-nav-item">合作单位</a>
+            <a href="members.html" class="sub-nav-item">项目人员</a>
+        </div>
+    </nav>
+
+     <main class="sub-page-content" style="position: relative;">
+        <!-- 标题 -->
+        <h2 style="text-align: center; margin-bottom: 1rem;">四川省医学科学院·四川省肿瘤医院 - 项目成果</h2>
+
+        <!-- 右上角按钮 - 绝对定位在角落 -->
+        <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 1rem;">
+            <button onclick="window.location.href='teams.html'" class="back-button">← 返回合作单位</button>
+            <button class="add-result-btn" onclick="openAddResultModal()">✚ 添加新成果</button>
+        </div>
+        
+        <!-- 板块一：在研进展 -->
+        <div class="research-section">
+            <h3 class="section-title">在研进展</h3>
+            <div class="results-cards-container" id="ongoingResults">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📋</div>
+                    <div class="empty-state-text">暂无在研进展，点击右上方右按钮添加</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 板块二：产出成果 -->
+        <div class="research-section">
+            <h3 class="section-title">产出成果</h3>
+            <div class="results-cards-container" id="outputResults">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📄</div>
+                    <div class="empty-state-text">暂无产出成果，点击右上方按钮添加</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy;国家科技重大专项“重大慢病防治技术推广机制研究及应用示范”课题“整合式智慧慢病管理模式研究”（编号：2024ZD0523902）@四川大学华西公共卫生学院</p>
+    </footer>
+
+    <!-- 管理员模式指示器 -->
+    <div class="admin-badge" id="adminBadge" onclick="openAdminLoginModal()">
+        🔒 管理员模式
+    </div>
+
+    <!-- 添加成果模态框 -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加新成果</h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="addResultForm">
+                <div class="form-group">
+                    <label>成果类型 *</label>
+                    <select id="resultType" required>
+                        <option value="ongoing">在研进展</option>
+                        <option value="output">产出成果</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>成果名称 *</label>
+                    <input type="text" id="resultTitle" placeholder="请输入成果名称" required>
+                </div>
+                <div class="form-group">
+                    <label>封面图片 *</label>
+                    <input type="file" id="resultImage" accept="image/*" onchange="previewImage(this)">
+                    <div id="imagePreview" class="image-preview">
+                        <img id="previewImg" src="">
+                    </div>
+                    <small style="color: #666;">请上传成果封面图片（建议尺寸：16:9）</small>
+                </div>
+                <div class="form-group">
+                    <label>成果链接</label>
+                    <input type="url" id="resultLink" placeholder="https://example.com/result">
+                    <small style="color: #666;">添加链接后，点击卡片可跳转到详细内容页面</small>
+                </div>
+                <button type="submit" class="submit-btn">添加成果</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 管理员登录模态框 -->
+    <div id="adminLoginModal" class="admin-login-modal">
+        <div class="admin-login-content">
+            <h3>管理员验证</h3>
+            <input type="password" id="adminPassword" placeholder="请输入管理员密码" autocomplete="off">
+            <button onclick="verifyAdmin()">确认</button>
+            <button onclick="closeAdminLoginModal()" class="cancel-btn">取消</button>
+        </div>
+    </div>
+
+    <script>
+        // 存储key
+        const STORAGE_KEY_ONGOING = 'ongoingResults';
+        const STORAGE_KEY_OUTPUT = 'outputResults';
+        
+        // 管理员密码
+        const ADMIN_PASSWORD = 'admin123';
+        
+        // 全局变量
+        let isAdminMode = false;
+        let ongoingResults = [];
+        let outputResults = [];
+        let currentImageData = null;
+        
+        // 加载数据
+        function loadDataFromStorage() {
+            const savedOngoing = localStorage.getItem(STORAGE_KEY_ONGOING);
+            const savedOutput = localStorage.getItem(STORAGE_KEY_OUTPUT);
+            
+            ongoingResults = savedOngoing ? JSON.parse(savedOngoing) : [];
+            outputResults = savedOutput ? JSON.parse(savedOutput) : [];
+        }
+        
+        // 保存数据
+        function saveDataToStorage() {
+            localStorage.setItem(STORAGE_KEY_ONGOING, JSON.stringify(ongoingResults));
+            localStorage.setItem(STORAGE_KEY_OUTPUT, JSON.stringify(outputResults));
+        }
+        
+        // 图片预览
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.style.display = 'block';
+                    currentImageData = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.style.display = 'none';
+                currentImageData = null;
+            }
+        }
+        
+        // 更新管理员徽章
+        function updateAdminBadge() {
+            const badge = document.getElementById('adminBadge');
+            if (isAdminMode) {
+                badge.innerHTML = '👑 管理员模式 (已启用)';
+                badge.style.background = '#28a745';
+            } else {
+                badge.innerHTML = '🔒 管理员模式';
+                badge.style.background = '#8B0000';
+            }
+        }
+        
+        // 检查删除权限
+        function canDelete(result) {
+            if (isAdminMode) return true;
+            const currentUploader = sessionStorage.getItem('uploaderId');
+            return result.uploaderId === currentUploader;
+        }
+        
+        // 删除成果
+        function deleteResult(type, id, event) {
+            event.stopPropagation();
+            event.preventDefault();
+            
+            const result = type === 'ongoing' 
+                ? ongoingResults.find(r => r.id === id)
+                : outputResults.find(r => r.id === id);
+            
+            if (!result) return;
+            
+            if (!canDelete(result)) {
+                alert('您没有权限删除此成果！\n只有管理员和上传者可以删除。');
+                return;
+            }
+            
+            if (confirm(`确定要删除成果「${result.title}」吗？`)) {
+                if (type === 'ongoing') {
+                    ongoingResults = ongoingResults.filter(r => r.id !== id);
+                } else {
+                    outputResults = outputResults.filter(r => r.id !== id);
+                }
+                saveDataToStorage();
+                renderResults();
+                alert('删除成功！');
+            }
+        }
+        
+        // 管理员相关
+        function openAdminLoginModal() {
+            document.getElementById('adminLoginModal').classList.add('active');
+            document.getElementById('adminPassword').value = '';
+        }
+        
+        function closeAdminLoginModal() {
+            document.getElementById('adminLoginModal').classList.remove('active');
+        }
+        
+        function verifyAdmin() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                isAdminMode = true;
+                sessionStorage.setItem('isAdminMode', 'true');
+                closeAdminLoginModal();
+                updateAdminBadge();
+                renderResults();
+                alert('管理员模式已启用！');
+            } else {
+                alert('密码错误！');
+            }
+        }
+        
+        function checkAdminMode() {
+            const saved = sessionStorage.getItem('isAdminMode');
+            if (saved === 'true') {
+                isAdminMode = true;
+            }
+            updateAdminBadge();
+        }
+        
+        // 生成上传者ID
+        function generateUploaderId() {
+            let id = sessionStorage.getItem('uploaderId');
+            if (!id) {
+                id = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                sessionStorage.setItem('uploaderId', id);
+            }
+            return id;
+        }
+        
+        // 渲染卡片
+        function renderResults() {
+            const ongoingContainer = document.getElementById('ongoingResults');
+            const outputContainer = document.getElementById('outputResults');
+            
+            // 在研进展
+            if (ongoingResults.length === 0) {
+                ongoingContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">暂无在研进展，点击右上方按钮添加</div></div>`;
+            } else {
+                ongoingContainer.innerHTML = ongoingResults.map(result => {
+                    const hasLink = result.link && result.link.trim() !== '';
+                    const cardTag = hasLink ? 'a' : 'div';
+                    const hrefAttr = hasLink ? `href="${result.link}" target="_blank"` : '';
+                    const showDelete = canDelete(result);
+                    
+                    return `<${cardTag} class="result-card" ${hrefAttr}>
+                        ${showDelete ? `<button class="delete-btn" onclick="deleteResult('ongoing', '${result.id}', event)">×</button>` : ''}
+                        <div class="card-image">${result.image ? `<img src="${result.image}" alt="${result.title}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;">暂无图片</div>'}</div>
+                        <div class="card-title">${result.title}</div>
+                    </${cardTag}>`;
+                }).join('');
+            }
+            
+            // 产出成果
+            if (outputResults.length === 0) {
+                outputContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📄</div><div class="empty-state-text">暂无产出成果，点击右上方按钮添加</div></div>`;
+            } else {
+                outputContainer.innerHTML = outputResults.map(result => {
+                    const hasLink = result.link && result.link.trim() !== '';
+                    const cardTag = hasLink ? 'a' : 'div';
+                    const hrefAttr = hasLink ? `href="${result.link}" target="_blank"` : '';
+                    const showDelete = canDelete(result);
+                    
+                    return `<${cardTag} class="result-card" ${hrefAttr}>
+                        ${showDelete ? `<button class="delete-btn" onclick="deleteResult('output', '${result.id}', event)">×</button>` : ''}
+                        <div class="card-image">${result.image ? `<img src="${result.image}" alt="${result.title}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;">暂无图片</div>'}</div>
+                        <div class="card-title">${result.title}</div>
+                    </${cardTag}>`;
+                }).join('');
+            }
+        }
+        
+        // 添加成果相关
+        function openAddResultModal() {
+            document.getElementById('resultModal').classList.add('active');
+            document.getElementById('addResultForm').reset();
+            document.getElementById('imagePreview').style.display = 'none';
+            currentImageData = null;
+        }
+        
+        function closeModal() {
+            document.getElementById('resultModal').classList.remove('active');
+        }
+        
+        function addNewResult(type, title, imageData, link) {
+            const newId = `${type}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            const newResult = {
+                id: newId,
+                title: title,
+                image: imageData || null,
+                link: link || null,
+                uploaderId: generateUploaderId(),
+                createTime: new Date().toISOString()
+            };
+            
+            if (type === 'ongoing') {
+                ongoingResults.push(newResult);
+            } else {
+                outputResults.push(newResult);
+            }
+            
+            saveDataToStorage();
+            renderResults();
+            alert(`成果「${title}」已添加！鼠标悬停卡片可看到删除按钮。`);
+        }
+        
+        // 初始化
+        loadDataFromStorage();
+        checkAdminMode();
+        renderResults();
+        
+        // 表单提交
+        document.getElementById('addResultForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const type = document.getElementById('resultType').value;
+            const title = document.getElementById('resultTitle').value.trim();
+            const link = document.getElementById('resultLink').value.trim();
+            
+            if (!title) {
+                alert('请输入成果名称');
+                return;
+            }
+            
+            if (!currentImageData) {
+                if (confirm('尚未上传封面图片，确定要添加吗？')) {
+                    addNewResult(type, title, null, link);
+                    closeModal();
+                }
+                return;
+            }
+            
+            addNewResult(type, title, currentImageData, link);
+            closeModal();
+        });
+        
+        // 模态框背景关闭
+        document.getElementById('resultModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        
+        document.getElementById('adminLoginModal').addEventListener('click', function(e) {
+            if (e.target === this) closeAdminLoginModal();
+        });
+        
+        // 右键退出管理员模式
+        document.getElementById('adminBadge').addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            if (isAdminMode && confirm('退出管理员模式？')) {
+                isAdminMode = false;
+                sessionStorage.removeItem('isAdminMode');
+                updateAdminBadge();
+                renderResults();
+                alert('已退出管理员模式');
+            }
+        });
+    </script>
+</body>
+</html>
