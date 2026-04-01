@@ -663,32 +663,33 @@ footer {
 
 .members-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: row;        /* 左右排列 */
     flex-wrap: wrap;
     gap: 3rem;
     margin-top: 2vh;
     align-items: flex-start;
 }
 
-/* 左侧图片区域 */
+/* 左侧图片区域 - 比例大小 */
 .members-image {
-    flex: 1;
-    width: 35%;              /* 占父容器宽度的35% */
-    min-width: 250px;        /* 最小宽度，防止过小 */
-    max-width: 450px;        /* 最大宽度，防止过大 */
+    flex: 1;                    /* 占据剩余空间 */
+    max-width: 35%;             /* 最大宽度不超过35% */
+    min-width: 250px;
 }
 
 .members-image img {
-    width: 100%;             /* 图片占满容器宽度 */
-    height: auto;            /* 高度自动，保持比例 */
+    width: 100%;
+    height: auto;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 /* 右侧成员列表区域 */
 .members-list {
-    flex: 2;
+    flex: 2;                    /* 占据2倍空间 */
     min-width: 280px;
 }
+
 /* 单个成员项 */
 .member-item {
     padding: 0.8rem 1rem;
@@ -697,17 +698,19 @@ footer {
     border-radius: 12px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     line-height: 1.5;
-    font-size: 0.95rem;
+    font-size: clamp(0.85rem, 1vw, 0.95rem);
     color: #333;
 }
+
 .member-item:hover {
     transform: translateX(4px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     background: #fff;
 }
+
 .member-item strong {
     color: #8B0000;
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 1.05vw, 1rem);
     display: inline-block;
     min-width: 70px;
 }
