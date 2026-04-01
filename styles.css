@@ -548,6 +548,7 @@ footer {
     background: #8B0000;
     color: white;
     transform: translateX(0.3vw);
+}
 /* ========== 弹窗（Tooltip）样式 ========== */
 .tooltip-item {
     position: relative;
