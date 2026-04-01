@@ -783,3 +783,29 @@ footer {
     line-height: 1.4;
     background: white;
 }
+
+
+/* ========== 返回按钮样式 ========== */
+.back-button-container {
+    margin-bottom: 2vh;
+    text-align: left;
+}
+.back-button {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.back-button:hover {
+    background: #8B0000;
+    color: white;
+    transform: translateX(-3px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
