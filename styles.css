@@ -449,7 +449,7 @@ footer {
     background: white;
 }
 
-/* =========单位介绍============ */
+/* ========== 合作单位卡片样式 ========== */
 /* 卡片容器：一排显示 */
 .partners-container {
     display: flex;
@@ -461,12 +461,11 @@ footer {
 }
 /* 每个单位独立包装 */
 .partner-card-wrapper {
-    width: 18vw;
-    min-width: 18vw;
-    max-width: 20vw;
+    width: 14vw;
+    min-width: 220px;
+    max-width: 280px;
     display: flex;
     flex-direction: column;
-    flex: 1 1 0;
 }
 /* 悬浮窗卡片 - 带背景图 */
 .partner-card {
@@ -479,24 +478,39 @@ footer {
     box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     overflow: hidden;
-    height: 16vh;
-    min-height: 12vh;
-    max-height: 18vh;
+    height: 15vh;
+    min-height: 100px;
+    max-height: 130px;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     position: relative;
-    flex-grow: 1;
+}
+/* 半透明遮罩层 - 让文字更清晰 */
+.partner-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(139, 69, 19, 0.5);  /* 半透明颜色，可调整 */
+    border-radius: 1.2vw;
+    z-index: 1;
+}
+.partner-card:hover {
+    transform: translateY(-0.8vh);
+    box-shadow: 0 1.5vh 3vh rgba(0, 0, 0, 0.15);
 }
 /* 卡片内的文字 */
 .partner-card h3 {
     position: relative;
     z-index: 2;
     color: white;
-    padding: 1.5vh 1vw;
+    padding: 1.4vh 1vw;
     margin: 0;
-    font-size: clamp(1rem, 1.2vw, 1.4rem);
+    font-size: clamp(1rem, 1.3vw, 1.5rem);
     font-weight: 600;
     text-align: center;
     letter-spacing: 0.5px;
@@ -505,13 +519,9 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1.4;
+    line-height: 1.5;
     word-break: break-word;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
 }
 /* 三行文字链接区域 */
 .partner-links {
@@ -523,11 +533,11 @@ footer {
 }
 .link-item {
     display: block;
-    padding: 0.9vh 0.7vw;
+    padding: 0.8vh 0.6vw;
     background: #f8f9fa;
     border-radius: 0.8vw;
     text-decoration: none;
-    font-size: 1rem; 
+    font-size: clamp(0.9rem, 1vw, 1rem);
     color: #333;
     transition: all 0.2s ease;
     text-align: center;
@@ -538,7 +548,6 @@ footer {
     background: #8B0000;
     color: white;
     transform: translateX(0.3vw);
-}
 /* ========== 弹窗（Tooltip）样式 ========== */
 .tooltip-item {
     position: relative;
