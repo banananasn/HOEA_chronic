@@ -397,7 +397,7 @@
             <div class="results-cards-container" id="ongoingResults">
                 <div class="empty-state">
                     <div class="empty-state-icon">📋</div>
-                    <div class="empty-state-text">暂无在研进展，点击上方按钮添加</div>
+                    <div class="empty-state-text">暂无在研进展，点击右上方右按钮添加</div>
                 </div>
             </div>
         </div>
@@ -408,7 +408,7 @@
             <div class="results-cards-container" id="outputResults">
                 <div class="empty-state">
                     <div class="empty-state-icon">📄</div>
-                    <div class="empty-state-text">暂无产出成果，点击上方按钮添加</div>
+                    <div class="empty-state-text">暂无产出成果，点击右上方按钮添加</div>
                 </div>
             </div>
         </div>
@@ -615,7 +615,7 @@
             
             // 在研进展
             if (ongoingResults.length === 0) {
-                ongoingContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">暂无在研进展，点击上方按钮添加</div></div>`;
+                ongoingContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">暂无在研进展，点击右上方按钮添加</div></div>`;
             } else {
                 ongoingContainer.innerHTML = ongoingResults.map(result => {
                     const hasLink = result.link && result.link.trim() !== '';
@@ -633,7 +633,7 @@
             
             // 产出成果
             if (outputResults.length === 0) {
-                outputContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📄</div><div class="empty-state-text">暂无产出成果，点击上方按钮添加</div></div>`;
+                outputContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📄</div><div class="empty-state-text">暂无产出成果，点击右上方按钮添加</div></div>`;
             } else {
                 outputContainer.innerHTML = outputResults.map(result => {
                     const hasLink = result.link && result.link.trim() !== '';
