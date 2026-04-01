@@ -316,7 +316,7 @@ body.sub-page {
     background: rgba(255, 255, 255, 0.92);
     border-radius: 0;
     max-width: 100%;
-    padding: 4vh 5vw;              /*上边距与左右边距*/
+    padding: 3vh 5vw;              /*上边距与左右边距*/
     margin-top: 0;               /* 确保没有上边距 */
     box-shadow: none;
     flex: 0 0 auto;              /* 不拉伸，保持内容高度 */
