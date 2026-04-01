@@ -3,523 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>项目成果 - 四川省人民医院 | 整合式智慧慢病管理模式研究</title>
+    <title>合作单位 - 整合式智慧慢病管理模式研究</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* 成果卡片增强样式 */
-        .results-cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2vw;
-            justify-content: flex-start;
-            margin: 2vh 0;
-        }
-
-        .result-card {
-            flex: 1;
-            min-width: 240px;
-            max-width: 280px;
-            background: #fff;
-            border-radius: 1.2vw;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            cursor: pointer;
-        }
-
-        .result-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
-
-        .card-image {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            overflow: hidden;
-            background: #f0f2f5;
-            position: relative;
-        }
-
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .result-card:hover .card-image img {
-            transform: scale(1.05);
-        }
-
-        /* 待补充占位样式 */
-        .card-image.placeholder {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .placeholder-icon {
-            font-size: 3rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .card-title {
-            padding: 1rem;
-            font-size: clamp(0.85rem, 1.2vw, 0.95rem);
-            font-weight: 500;
-            color: #333;
-            line-height: 1.4;
-            text-align: center;
-            background: #fff;
-            border-top: 1px solid #eee;
-        }
-
-        /* 待补充状态特殊样式 */
-        .result-card.pending .card-title {
-            color: #999;
-            font-style: italic;
-        }
-
-        .result-card.pending .card-image {
-            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
-        }
-
-        /* 占位文本样式 */
-        .pending-badge {
-            display: inline-block;
-            background: #ff9800;
-            color: #fff;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 1rem;
-            margin-left: 0.5rem;
-            vertical-align: middle;
-        }
-
-        /* 研究板块样式 */
-        .research-section {
-            margin-bottom: 4vh;
-        }
-
-        .section-title {
-            font-size: clamp(1.2rem, 2vw, 1.5rem);
-            color: #8B0000;
-            border-left: 0.3vw solid #8B0000;
-            padding-left: 1vw;
-            margin: 2vh 0 2vh 0;
-        }
-
-        /* 添加成果按钮 */
-        .add-result-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #8B0000;
-            color: #fff;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 2rem;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-bottom: 1rem;
-        }
-
-        .add-result-btn:hover {
-            background: #a00000;
-            transform: translateY(-2px);
-        }
-
-        /* 模态框样式（用于添加成果） */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #fff;
-            border-radius: 1rem;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #eee;
-        }
-
-        .modal-header h3 {
-            margin: 0;
-            color: #8B0000;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #999;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.6rem;
-            border: 1px solid #ddd;
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .submit-btn {
-            background: #8B0000;
-            color: #fff;
-            border: none;
-            padding: 0.8rem;
-            border-radius: 0.5rem;
-            width: 100%;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-
-        .submit-btn:hover {
-            background: #a00000;
-        }
-
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .results-cards-container {
-                gap: 1rem;
-                justify-content: center;
-            }
-            
-            .result-card {
-                min-width: 200px;
-            }
-        }
-    </style>
 </head>
 <body class="sub-page">
 
+    <!-- 版头（在导航栏上方） -->
     <header class="sub-header">
         <h1>整合式智慧慢病管理模式研究</h1>
         <p class="sub-header-subtitle">国家科技重大专项课题</p>
     </header>
 
+    <!-- 固定导航栏 -->
     <nav class="sub-nav">
         <div class="sub-nav-container">
             <a href="index.html" class="sub-nav-item">首页</a>
             <a href="trends.html" class="sub-nav-item">研究动态</a>
             <a href="results.html" class="sub-nav-item">研究成果</a>
             <a href="plan.html" class="sub-nav-item">研究计划</a>
-            <a href="teams.html" class="sub-nav-item">合作单位</a>
+            <a href="teams.html" class="sub-nav-item active">合作单位</a>
             <a href="members.html" class="sub-nav-item">项目人员</a>
         </div>
     </nav>
 
+    <!-- 页面主要内容 -->
     <main class="sub-page-content">
-        <!-- 返回按钮 -->
-        <div class="back-button-container">
-            <button onclick="history.back()" class="back-button">← 返回</button>
-            <button class="add-result-btn" onclick="openAddResultModal()">
-                ✚ 添加新成果
-            </button>
-        </div>
-
-        <h2>四川省医学科学院·四川省人民医院 - 项目成果</h2>
-        
-        <!-- 板块一：在研成果 -->
-        <div class="research-section">
-            <h3 class="section-title">📊 在研成果</h3>
-            <div class="results-cards-container" id="ongoingResults">
-                <div class="result-card pending" data-id="ongoing1">
-                    <div class="card-image placeholder">
-                        <div class="placeholder-icon">📋</div>
-                    </div>
-                    <div class="card-title">
-                        基于人工智能的慢病风险评估模型开发
-                        <span class="pending-badge">待补充</span>
-                    </div>
+        <h2>合作单位</h2>
+        <div class="partners-container">
+            
+            <!-- 单位1：省人民医院 -->
+            <div class="partner-card-wrapper">
+                <div class="partner-card" style="background-image: url('images/logo-省人民医院.jpg');" onclick="window.open('https://www.samsph.cn/index.html', '_blank')">
+                    <h3>四川省医学科学院·四川省人民医院</h3>
                 </div>
-                <div class="result-card pending" data-id="ongoing2">
-                    <div class="card-image placeholder">
-                        <div class="placeholder-icon">📊</div>
+                <div class="partner-links">
+                    <div class="tooltip-item">
+                        <span class="tooltip-trigger">
+                            <img src="images/icon-任务分工.png" alt="任务分工" class="link-icon"> 任务分工
+                        </span>
+                        <div class="tooltip-content">
+                            <strong>任务分工：</strong><br>
+                            作为课题参与单位，充分利用四川省医学科学院优势，参与整合式重大慢病管理路径设计与完善，参与专家遴选、问卷设计、数据集成与分析，以及专家论证等工作。
+                        </div>
                     </div>
-                    <div class="card-title">
-                        慢病管理效果评估指标体系构建
-                        <span class="pending-badge">待补充</span>
+                    <div class="tooltip-item">
+                        <span class="tooltip-trigger">
+                            <img src="images/icon-考核指标.png" alt="考核指标" class="link-icon"> 考核指标
+                        </span>
+                        <div class="tooltip-content">
+                            <strong>考核指标：</strong><br>
+                            深度参与制定代谢、心血管疾病的整合式管理路径；发表论文不少于1篇。
+                        </div>
                     </div>
-                </div>
-                <div class="result-card pending" data-id="ongoing3">
-                    <div class="card-image placeholder">
-                        <div class="placeholder-icon">🔬</div>
-                    </div>
-                    <div class="card-title">
-                        整合式慢病管理路径优化研究
-                        <span class="pending-badge">待补充</span>
-                    </div>
+                    <a href="https://mp.weixin.qq.com/s/论文链接1" target="_blank" class="link-item">
+                        <img src="images/icon-项目成果.png" alt="项目成果" class="link-icon"> 项目成果
+                    </a>
+                    <a href="mailto:heoagroup@126.com" class="link-item">
+                        <img src="images/icon-项目沟通.png" alt="项目沟通" class="link-icon"> 项目沟通
+                    </a>
                 </div>
             </div>
-        </div>
 
-        <!-- 板块二：产出成果 -->
-        <div class="research-section">
-            <h3 class="section-title">📄 产出成果</h3>
-            <div class="results-cards-container" id="outputResults">
-                <div class="result-card pending" data-id="output1">
-                    <div class="card-image placeholder">
-                        <div class="placeholder-icon">📑</div>
-                    </div>
-                    <div class="card-title">
-                        代谢性疾病整合式管理路径设计方案（初稿）
-                        <span class="pending-badge">待补充</span>
-                    </div>
+            <!-- 单位2：华西医院 -->
+            <div class="partner-card-wrapper">
+                <div class="partner-card" style="background-image: url('images/logo-华西医院.jpg');" onclick="window.open('https://www.wchscu.cn/public/index.html', '_blank')">
+                    <h3>四川大学华西医院</h3>
                 </div>
-                <div class="result-card pending" data-id="output2">
-                    <div class="card-image placeholder">
-                        <div class="placeholder-icon">❤️</div>
+                <div class="partner-links">
+                    <div class="tooltip-item">
+                        <span class="tooltip-trigger">
+                            <img src="images/icon-任务分工.png" alt="任务分工" class="link-icon"> 任务分工
+                        </span>
+                        <div class="tooltip-content">
+                            <strong>任务分工：</strong><br>
+                            作为课题参与单位，充分利用华西医联体和智慧医疗优势，参与构建整合式智慧慢病管理模式，及其运行机制分析与实施对策研究。
+                        </div>
                     </div>
-                    <div class="card-title">
-                        心血管疾病管理路径临床验证报告
-                        <span class="pending-badge">待补充</span>
+                    <div class="tooltip-item">
+                        <span class="tooltip-trigger">
+                            <img src="images/icon-考核指标.png" alt="考核指标" class="link-icon"> 考核指标
+                        </span>
+                        <div class="tooltip-content">
+                            <strong>考核指标：</strong><br>
+                            深度参与制定呼吸领域疾病的整合式管理路径的开发；参与开发整合式智慧慢病管理模式；发表论文不少于1篇。
+                        </div>
                     </div>
-                </div>
-                <div class="result-card pending" data-id="output3">
-                    <div class="card-image placeholder">
-                        <div class="placeholder-icon">🤝</div>
-                    </div>
-                    <div class="card-title">
-                        慢病管理专家共识（参与撰写）
-                        <span class="pending-badge">待补充</span>
-                    </div>
-                </div>
-                <div class="result-card pending" data-id="output4">
-                    <div class="card-image placeholder">
-                        <div class="placeholder-icon">📝</div>
-                    </div>
-                    <div class="card-title">
-                        《整合式慢病管理模式在代谢性疾病中的应用研究》（投稿中）
-                        <span class="pending-badge">待补充</span>
-                    </div>
+                    <a href="https://mp.weixin.qq.com/s/论文链接2" target="_blank" class="link-item">
+                        <img src="images/icon-项目成果.png" alt="项目成果" class="link-icon"> 项目成果
+                    </a>
+                    <a href="mailto:wcums@163.com" class="link-item">
+                        <img src="images/icon-项目沟通.png" alt="项目沟通" class="link-icon"> 项目沟通
+                    </a>
                 </div>
             </div>
-        </div>
 
+            <!-- 单位3：省肿瘤医院 -->
+            <div class="partner-card-wrapper">
+                <div class="partner-card" style="background-image: url('images/logo-省肿瘤医院.jpg');" onclick="window.open('https://www.sichuancancer.org/sy.htm', '_blank')">
+                    <h3>四川省肿瘤医院</h3>
+                </div>
+                <div class="partner-links">
+                    <div class="tooltip-item">
+                        <span class="tooltip-trigger">
+                            <img src="images/icon-任务分工.png" alt="任务分工" class="link-icon"> 任务分工
+                        </span>
+                        <div class="tooltip-content">
+                            <strong>任务分工：</strong><br>
+                            作为课题参与单位，依托其癌症治疗与管理优势，参与课题癌症相关的慢病管理路径与管理模式研究，参与课题相关调查问卷设计、课题论证等工作。
+                        </div>
+                    </div>
+                    <div class="tooltip-item">
+                        <span class="tooltip-trigger">
+                            <img src="images/icon-考核指标.png" alt="考核指标" class="link-icon"> 考核指标
+                        </span>
+                        <div class="tooltip-content">
+                            <strong>考核指标：</strong><br>
+                            参与制定癌症领域管理路径和开发整合式智慧慢病管理模式。
+                        </div>
+                    </div>
+                    <a href="https://mp.weixin.qq.com/s/论文链接3" target="_blank" class="link-item">
+                        <img src="images/icon-项目成果.png" alt="项目成果" class="link-icon"> 项目成果
+                    </a>
+                    <a href="mailto:wcums@163.com" class="link-item">
+                        <img src="images/icon-项目沟通.png" alt="项目沟通" class="link-icon"> 项目沟通
+                    </a>
+                </div>
+            </div>
+
+            <!-- 单位4：省中医药科学院中医研究所 -->
+            <div class="partner-card-wrapper">
+                <div class="partner-card" style="background-image: url('images/logo-省第二中医院.jpg');" onclick="window.open('https://www.sc2zyy.com/about.aspx?mid=361', '_blank')">
+                    <h3>四川省中医药科学院中医研究所</h3>
+                </div>
+                <div class="partner-links">
+                    <div class="tooltip-item">
+                        <span class="tooltip-trigger">
+                            <img src="images/icon-任务分工.png" alt="任务分工" class="link-icon"> 任务分工
+                        </span>
+                        <div class="tooltip-content">
+                            <strong>任务分工：</strong><br>
+                            作为课题参与单位，充分利用中医药学科优势，负责将中医药的特色与优势融入到整合式重大慢病管理路径与管理模式中，参与课题相关调查问卷设计、课题论证等工作。
+                        </div>
+                    </div>
+                    <div class="tooltip-item">
+                        <span class="tooltip-trigger">
+                            <img src="images/icon-考核指标.png" alt="考核指标" class="link-icon"> 考核指标
+                        </span>
+                        <div class="tooltip-content">
+                            <strong>考核指标：</strong><br>
+                            参与制定四大慢病中西医结合管理路径和整合式智慧慢病管理模式的开发。
+                        </div>
+                    </div>
+                    <a href="https://mp.weixin.qq.com/s/论文链接4" target="_blank" class="link-item">
+                        <img src="images/icon-项目成果.png" alt="项目成果" class="link-icon"> 项目成果
+                    </a>
+                    <a href="mailto:sph@163.com" class="link-item">
+                        <img src="images/icon-项目沟通.png" alt="项目沟通" class="link-icon"> 项目沟通
+                    </a>
+                </div>
+            </div>
+
+            <!-- 单位5：省疾控中心 -->
+            <div class="partner-card-wrapper">
+                <div class="partner-card" style="background-image: url('images/logo-省疾控.jpg');" onclick="window.open('https://www.sccdc.cn/', '_blank')">
+                    <h3>四川省疾病预防控制中心</h3>
+                </div>
+                <div class="partner-links">
+                    <div class="tooltip-item">
+                        <span class="tooltip-trigger">
+                            <img src="images/icon-任务分工.png" alt="任务分工" class="link-icon"> 任务分工
+                        </span>
+                        <div class="tooltip-content">
+                            <strong>任务分工：</strong><br>
+                            作为课题参与单位，依托四川省疾病预防控制网络和平台，负责整合式重大慢病管理路径试点评估，协调课题的访谈、现场调研与相关数据收集，为课题组提供慢病管理相关的数据支持，参与制定整合式重大慢病管理路径与管理模式。
+                        </div>
+                    </div>
+                    <div class="tooltip-item">
+                        <span class="tooltip-trigger">
+                            <img src="images/icon-考核指标.png" alt="考核指标" class="link-icon"> 考核指标
+                        </span>
+                        <div class="tooltip-content">
+                            <strong>考核指标：</strong><br>
+                            参与制定整合式重大慢病管理路径与管理模式；完成整合式重大慢病管理路径试点评估。
+                        </div>
+                    </div>
+                    <a href="https://mp.weixin.qq.com/s/论文链接5" target="_blank" class="link-item">
+                        <img src="images/icon-项目成果.png" alt="项目成果" class="link-icon"> 项目成果
+                    </a>
+                    <a href="mailto:dyly@163.com" class="link-item">
+                        <img src="images/icon-项目沟通.png" alt="项目沟通" class="link-icon"> 项目沟通
+                    </a>
+                </div>
+            </div>
+
+        </div>
     </main>
 
+    <!-- 页脚 -->
     <footer>
         <p>&copy;国家科技重大专项“重大慢病防治技术推广机制研究及应用示范”课题“整合式智慧慢病管理模式研究”（编号：2024ZD0523902）@四川大学华西公共卫生学院</p>
     </footer>
 
-    <!-- 添加成果模态框 -->
-    <div id="resultModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>添加新成果</h3>
-                <button class="close-modal" onclick="closeModal()">&times;</button>
-            </div>
-            <form id="addResultForm">
-                <div class="form-group">
-                    <label>成果类型 *</label>
-                    <select id="resultType" required>
-                        <option value="ongoing">在研成果</option>
-                        <option value="output">产出成果</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>成果名称 *</label>
-                    <input type="text" id="resultTitle" placeholder="请输入成果名称" required>
-                </div>
-                <div class="form-group">
-                    <label>图标/Emoji</label>
-                    <input type="text" id="resultIcon" placeholder="📋" value="📋" maxlength="2">
-                </div>
-                <div class="form-group">
-                    <label>备注</label>
-                    <textarea id="resultNote" rows="3" placeholder="补充说明（可选）"></textarea>
-                </div>
-                <button type="submit" class="submit-btn">添加成果</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        // 待补充成果数据
-        let ongoingResults = [
-            { id: 'ongoing1', title: '基于人工智能的慢病风险评估模型开发', icon: '📋', status: 'pending' },
-            { id: 'ongoing2', title: '慢病管理效果评估指标体系构建', icon: '📊', status: 'pending' },
-            { id: 'ongoing3', title: '整合式慢病管理路径优化研究', icon: '🔬', status: 'pending' }
-        ];
-        
-        let outputResults = [
-            { id: 'output1', title: '代谢性疾病整合式管理路径设计方案（初稿）', icon: '📑', status: 'pending' },
-            { id: 'output2', title: '心血管疾病管理路径临床验证报告', icon: '❤️', status: 'pending' },
-            { id: 'output3', title: '慢病管理专家共识（参与撰写）', icon: '🤝', status: 'pending' },
-            { id: 'output4', title: '《整合式慢病管理模式在代谢性疾病中的应用研究》（投稿中）', icon: '📝', status: 'pending' }
-        ];
-
-        // 渲染成果卡片
-        function renderResults() {
-            const ongoingContainer = document.getElementById('ongoingResults');
-            const outputContainer = document.getElementById('outputResults');
-            
-            ongoingContainer.innerHTML = ongoingResults.map(result => `
-                <div class="result-card ${result.status === 'pending' ? 'pending' : ''}" data-id="${result.id}" onclick="viewResultDetail('${result.id}')">
-                    <div class="card-image ${result.status === 'pending' ? 'placeholder' : ''}">
-                        <div class="placeholder-icon">${result.icon}</div>
-                    </div>
-                    <div class="card-title">
-                        ${result.title}
-                        ${result.status === 'pending' ? '<span class="pending-badge">待补充</span>' : ''}
-                    </div>
-                </div>
-            `).join('');
-            
-            outputContainer.innerHTML = outputResults.map(result => `
-                <div class="result-card ${result.status === 'pending' ? 'pending' : ''}" data-id="${result.id}" onclick="viewResultDetail('${result.id}')">
-                    <div class="card-image ${result.status === 'pending' ? 'placeholder' : ''}">
-                        <div class="placeholder-icon">${result.icon}</div>
-                    </div>
-                    <div class="card-title">
-                        ${result.title}
-                        ${result.status === 'pending' ? '<span class="pending-badge">待补充</span>' : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // 查看成果详情（模拟）
-        function viewResultDetail(id) {
-            const allResults = [...ongoingResults, ...outputResults];
-            const result = allResults.find(r => r.id === id);
-            if (result) {
-                alert(`【${result.title}】\n当前状态：${result.status === 'pending' ? '待补充' : '已完善'}\n${result.status === 'pending' ? '详细信息正在整理中，敬请期待！' : '点击编辑按钮可更新内容'}`);
-            }
-        }
-
-        // 打开添加成果模态框
-        function openAddResultModal() {
-            document.getElementById('resultModal').classList.add('active');
-        }
-
-        // 关闭模态框
-        function closeModal() {
-            document.getElementById('resultModal').classList.remove('active');
-            document.getElementById('addResultForm').reset();
-        }
-
-        // 添加新成果
-        function addNewResult(type, title, icon) {
-            const newId = `${type}_${Date.now()}`;
-            const newResult = {
-                id: newId,
-                title: title,
-                icon: icon,
-                status: 'pending'
-            };
-            
-            if (type === 'ongoing') {
-                ongoingResults.push(newResult);
-            } else {
-                outputResults.push(newResult);
-            }
-            
-            renderResults();
-            alert(`成果「${title}」已添加！`);
-        }
-
-        // 表单提交处理
-        document.getElementById('addResultForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const type = document.getElementById('resultType').value;
-            const title = document.getElementById('resultTitle').value.trim();
-            const icon = document.getElementById('resultIcon').value.trim() || '📋';
-            
-            if (!title) {
-                alert('请输入成果名称');
-                return;
-            }
-            
-            addNewResult(type, title, icon);
-            closeModal();
-        });
-
-        // 点击模态框背景关闭
-        document.getElementById('resultModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        // 初始化渲染
-        renderResults();
-
-        // 添加上传图片功能（简化版）
-        function uploadImage(cardId) {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(evt) {
-                        // 更新卡片图片
-                        const card = document.querySelector(`.result-card[data-id="${cardId}"]`);
-                        if (card) {
-                            const imgContainer = card.querySelector('.card-image');
-                            imgContainer.innerHTML = `<img src="${evt.target.result}" alt="成果图片">`;
-                            imgContainer.classList.remove('placeholder');
-                            // 更新状态
-                            if (cardId.startsWith('ongoing')) {
-                                const result = ongoingResults.find(r => r.id === cardId);
-                                if (result) result.status = 'completed';
-                            } else {
-                                const result = outputResults.find(r => r.id === cardId);
-                                if (result) result.status = 'completed';
-                            }
-                            const badge = card.querySelector('.pending-badge');
-                            if (badge) badge.remove();
-                            card.classList.remove('pending');
-                        }
-                    };
-                    reader.readAsDataURL(file);
-                }
-            };
-            input.click();
-        }
-    </script>
+    <script src="scripts.js"></script>
 </body>
 </html>
