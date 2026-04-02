@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>项目成果 - 四川省第二中医医院 | 整合式智慧慢病管理模式研究</title>
+    <title>项目成果 - 四川省中医药科学院中医研究所 | 整合式智慧慢病管理模式研究</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         /* 成果卡片增强样式 */
@@ -65,6 +65,24 @@
         .delete-btn:hover {
             background: #ff0000;
             transform: scale(1.05);
+        }
+
+        /* 下载按钮样式 */
+        .download-btn {
+            display: inline-block;
+            margin: 0.5rem 1rem 1rem;
+            padding: 0.4rem 0.8rem;
+            background: #8B0000;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s ease;
+        }
+
+        .download-btn:hover {
+            background: #a00000;
         }
 
         .card-image {
@@ -315,6 +333,29 @@
             height: auto;
         }
 
+        .file-preview {
+            display: none;
+            margin-top: 8px;
+            padding: 8px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+
+        .clear-file-btn {
+            margin-left: 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 2px 8px;
+            cursor: pointer;
+        }
+
+        .clear-file-btn:hover {
+            background: #c82333;
+        }
+
         .submit-btn {
             background: #8B0000;
             color: #fff;
@@ -383,7 +424,7 @@
 
      <main class="sub-page-content" style="position: relative;">
         <!-- 标题 -->
-        <h2 style="text-align: center; margin-bottom: 1rem;">四川省医学科学院·四川省第二中医医院 - 项目成果</h2>
+        <h2 style="text-align: center; margin-bottom: 1rem;">四川省中医药科学院中医研究所 - 项目成果</h2>
 
         <!-- 右上角按钮 - 绝对定位在角落 -->
         <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 1rem;">
@@ -397,14 +438,14 @@
             <div class="results-cards-container" id="ongoingResults">
                 <div class="empty-state">
                     <div class="empty-state-icon">📋</div>
-                    <div class="empty-state-text">暂无在研动态，点击右上方右按钮添加</div>
+                    <div class="empty-state-text">暂无在研动态，点击右上方按钮添加</div>
                 </div>
             </div>
         </div>
 
-        <!-- 板块二：产出成果 -->
+        <!-- 板块二：阶段性产出成果 -->
         <div class="research-section">
-            <h3 class="section-title">产出成果</h3>
+            <h3 class="section-title">阶段性产出成果</h3>
             <div class="results-cards-container" id="outputResults">
                 <div class="empty-state">
                     <div class="empty-state-icon">📄</div>
@@ -456,6 +497,15 @@
                     <input type="url" id="resultLink" placeholder="https://example.com/result">
                     <small style="color: #666;">添加链接后，点击卡片可跳转到详细内容页面</small>
                 </div>
+                <div class="form-group">
+                    <label>上传附件（Word/PDF）</label>
+                    <input type="file" id="resultFile" accept=".pdf,.doc,.docx" onchange="previewFile(this)">
+                    <div id="filePreview" class="file-preview">
+                        <span id="fileName"></span>
+                        <button type="button" class="clear-file-btn" onclick="clearFile()">清除</button>
+                    </div>
+                    <small style="color: #666;">可选，支持 PDF、Word 格式，最大 10MB</small>
+                </div>
                 <button type="submit" class="submit-btn">添加成果</button>
             </form>
         </div>
@@ -473,8 +523,8 @@
 
     <script>
         // 存储key
-        const STORAGE_KEY_ONGOING = 'ongoingResults';
-        const STORAGE_KEY_OUTPUT = 'outputResults';
+        const STORAGE_KEY_ONGOING = 'ongoingResultsTCM';
+        const STORAGE_KEY_OUTPUT = 'outputResultsTCM';
         
         // 管理员密码
         const ADMIN_PASSWORD = 'admin123';
@@ -484,6 +534,8 @@
         let ongoingResults = [];
         let outputResults = [];
         let currentImageData = null;
+        let currentFileData = null;
+        let currentFileName = null;
         
         // 加载数据
         function loadDataFromStorage() {
@@ -517,6 +569,49 @@
                 preview.style.display = 'none';
                 currentImageData = null;
             }
+        }
+        
+        // 文件预览
+        function previewFile(input) {
+            const filePreview = document.getElementById('filePreview');
+            const fileNameSpan = document.getElementById('fileName');
+            
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const fileSize = file.size / 1024 / 1024;
+                
+                if (fileSize > 10) {
+                    alert('文件大小不能超过 10MB！');
+                    input.value = '';
+                    filePreview.style.display = 'none';
+                    currentFileData = null;
+                    currentFileName = null;
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentFileData = e.target.result;
+                    currentFileName = file.name;
+                    fileNameSpan.innerHTML = `📎 已选择：${file.name}`;
+                    filePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                filePreview.style.display = 'none';
+                currentFileData = null;
+                currentFileName = null;
+            }
+        }
+        
+        // 清除文件
+        function clearFile() {
+            const fileInput = document.getElementById('resultFile');
+            const filePreview = document.getElementById('filePreview');
+            fileInput.value = '';
+            filePreview.style.display = 'none';
+            currentFileData = null;
+            currentFileName = null;
         }
         
         // 更新管理员徽章
@@ -608,6 +703,16 @@
             return id;
         }
         
+        // 下载文件函数
+        function downloadFile(dataUrl, fileName) {
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
         // 渲染卡片
         function renderResults() {
             const ongoingContainer = document.getElementById('ongoingResults');
@@ -622,11 +727,13 @@
                     const cardTag = hasLink ? 'a' : 'div';
                     const hrefAttr = hasLink ? `href="${result.link}" target="_blank"` : '';
                     const showDelete = canDelete(result);
+                    const hasFile = result.file && result.fileName;
                     
                     return `<${cardTag} class="result-card" ${hrefAttr}>
                         ${showDelete ? `<button class="delete-btn" onclick="deleteResult('ongoing', '${result.id}', event)">×</button>` : ''}
                         <div class="card-image">${result.image ? `<img src="${result.image}" alt="${result.title}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;">暂无图片</div>'}</div>
                         <div class="card-title">${result.title}</div>
+                        ${hasFile ? `<div class="download-btn" onclick="event.stopPropagation();downloadFile('${result.file}', '${result.fileName}')">📎 下载附件</div>` : ''}
                     </${cardTag}>`;
                 }).join('');
             }
@@ -640,11 +747,13 @@
                     const cardTag = hasLink ? 'a' : 'div';
                     const hrefAttr = hasLink ? `href="${result.link}" target="_blank"` : '';
                     const showDelete = canDelete(result);
+                    const hasFile = result.file && result.fileName;
                     
                     return `<${cardTag} class="result-card" ${hrefAttr}>
                         ${showDelete ? `<button class="delete-btn" onclick="deleteResult('output', '${result.id}', event)">×</button>` : ''}
                         <div class="card-image">${result.image ? `<img src="${result.image}" alt="${result.title}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;">暂无图片</div>'}</div>
                         <div class="card-title">${result.title}</div>
+                        ${hasFile ? `<div class="download-btn" onclick="event.stopPropagation();downloadFile('${result.file}', '${result.fileName}')">📎 下载附件</div>` : ''}
                     </${cardTag}>`;
                 }).join('');
             }
@@ -655,20 +764,31 @@
             document.getElementById('resultModal').classList.add('active');
             document.getElementById('addResultForm').reset();
             document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('filePreview').style.display = 'none';
             currentImageData = null;
+            currentFileData = null;
+            currentFileName = null;
         }
         
         function closeModal() {
             document.getElementById('resultModal').classList.remove('active');
+            document.getElementById('addResultForm').reset();
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('filePreview').style.display = 'none';
+            currentImageData = null;
+            currentFileData = null;
+            currentFileName = null;
         }
         
-        function addNewResult(type, title, imageData, link) {
+        function addNewResult(type, title, imageData, link, fileData, fileName) {
             const newId = `${type}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
             const newResult = {
                 id: newId,
                 title: title,
                 image: imageData || null,
                 link: link || null,
+                file: fileData || null,
+                fileName: fileName || null,
                 uploaderId: generateUploaderId(),
                 createTime: new Date().toISOString()
             };
@@ -703,13 +823,13 @@
             
             if (!currentImageData) {
                 if (confirm('尚未上传封面图片，确定要添加吗？')) {
-                    addNewResult(type, title, null, link);
+                    addNewResult(type, title, null, link, currentFileData, currentFileName);
                     closeModal();
                 }
                 return;
             }
             
-            addNewResult(type, title, currentImageData, link);
+            addNewResult(type, title, currentImageData, link, currentFileData, currentFileName);
             closeModal();
         });
         
