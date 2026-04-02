@@ -613,9 +613,9 @@
             const ongoingContainer = document.getElementById('ongoingResults');
             const outputContainer = document.getElementById('outputResults');
             
-            // 在研进展
+            // 在研动态与进展
             if (ongoingResults.length === 0) {
-                ongoingContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">暂无在研进展，点击右上方按钮添加</div></div>`;
+                ongoingContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">暂无在研动态，点击右上方按钮添加</div></div>`;
             } else {
                 ongoingContainer.innerHTML = ongoingResults.map(result => {
                     const hasLink = result.link && result.link.trim() !== '';
@@ -631,7 +631,7 @@
                 }).join('');
             }
             
-            // 产出成果
+            // 阶段性产出成果
             if (outputResults.length === 0) {
                 outputContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📄</div><div class="empty-state-text">暂无产出成果，点击右上方按钮添加</div></div>`;
             } else {
