@@ -15,6 +15,7 @@
             margin: 2vh 0;
             min-height: 200px;
         }
+
         .result-card {
             flex: 1;
             min-width: 240px;
@@ -35,7 +36,6 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
 
-        /* 删除按钮 - 悬停时显示 */
         .delete-btn {
             position: absolute;
             top: 8px;
@@ -66,7 +66,6 @@
             transform: scale(1.05);
         }
 
-        /* 下载按钮样式 */
         .download-btn {
             display: inline-block;
             margin: 0.5rem 1rem 1rem;
@@ -103,7 +102,6 @@
             transform: scale(1.05);
         }
 
-        /* 空状态占位样式 */
         .empty-state {
             width: 100%;
             text-align: center;
@@ -135,7 +133,6 @@
             border-top: 1px solid #eee;
         }
 
-        /* 研究板块样式 */
         .research-section {
             margin-bottom: 4vh;
         }
@@ -146,10 +143,8 @@
             border-left: 0.3vw solid #8B0000;
             padding-left: 1vw;
             margin: 2vh 0 2vh 0;
-            border-bottom-color: #8B0000 !important;
         }
 
-        /* 返回按钮样式 */
         .back-button {
             background: #6c757d;
             color: #fff;
@@ -170,7 +165,6 @@
             transform: translateY(-2px);
         }
 
-        /* 添加成果按钮 */
         .add-result-btn {
             display: inline-flex;
             align-items: center;
@@ -190,7 +184,6 @@
             transform: translateY(-2px);
         }
 
-        /* 管理员登录模态框 */
         .admin-login-modal {
             display: none;
             position: fixed;
@@ -244,7 +237,6 @@
             background: #6c757d;
         }
 
-        /* 模态框样式 */
         .modal {
             display: none;
             position: fixed;
@@ -371,7 +363,6 @@
             background: #a00000;
         }
 
-        /* 管理员模式指示器 */
         .admin-badge {
             position: fixed;
             bottom: 20px;
@@ -390,13 +381,11 @@
             background: #a00000;
         }
 
-        /* 响应式调整 */
         @media (max-width: 768px) {
             .results-cards-container {
                 gap: 1rem;
                 justify-content: center;
             }
-            
             .result-card {
                 min-width: 200px;
             }
@@ -422,35 +411,21 @@
     </nav>
 
      <main class="sub-page-content" style="position: relative;">
-        <!-- 标题 -->
-        <h2 style="text-align: center; margin-bottom: 1rem;">四川省医学科学院·四川省疾病预防控制中心 - 项目成果</h2>
+        <h2 style="text-align: center; margin-bottom: 1rem;">四川省疾病预防控制中心 - 项目成果</h2>
 
-        <!-- 右上角按钮 - 绝对定位在角落 -->
         <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 1rem;">
             <button onclick="window.location.href='teams.html'" class="back-button">← 返回合作单位</button>
             <button class="add-result-btn" onclick="openAddResultModal()">✚ 添加新成果</button>
         </div>
         
-        <!-- 板块一：在研动态与进展 -->
         <div class="research-section">
             <h3 class="section-title">在研动态与进展</h3>
-            <div class="results-cards-container" id="ongoingResults">
-                <div class="empty-state">
-                    <div class="empty-state-icon">📋</div>
-                    <div class="empty-state-text">暂无在研动态，点击右上方按钮添加</div>
-                </div>
-            </div>
+            <div class="results-cards-container" id="ongoingResults"></div>
         </div>
 
-        <!-- 板块二：阶段性产出成果 -->
         <div class="research-section">
             <h3 class="section-title">阶段性产出成果</h3>
-            <div class="results-cards-container" id="outputResults">
-                <div class="empty-state">
-                    <div class="empty-state-icon">📄</div>
-                    <div class="empty-state-text">暂无产出成果，点击右上方按钮添加</div>
-                </div>
-            </div>
+            <div class="results-cards-container" id="outputResults"></div>
         </div>
 
     </main>
@@ -459,12 +434,10 @@
         <p>&copy;国家科技重大专项“重大慢病防治技术推广机制研究及应用示范”课题“整合式智慧慢病管理模式研究”（编号：2024ZD0523902）@四川大学华西公共卫生学院</p>
     </footer>
 
-    <!-- 管理员模式指示器 -->
     <div class="admin-badge" id="adminBadge" onclick="openAdminLoginModal()">
         🔒 管理员模式
     </div>
 
-    <!-- 添加成果模态框 -->
     <div id="resultModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -510,7 +483,6 @@
         </div>
     </div>
 
-    <!-- 管理员登录模态框 -->
     <div id="adminLoginModal" class="admin-login-modal">
         <div class="admin-login-content">
             <h3>管理员验证</h3>
@@ -521,14 +493,10 @@
     </div>
 
     <script>
-        // 存储key
-        const STORAGE_KEY_ONGOING = 'ongoingResults';
-        const STORAGE_KEY_OUTPUT = 'outputResults';
-        
-        // 管理员密码
+        const STORAGE_KEY_ONGOING = 'ongoingResultsCDC';
+        const STORAGE_KEY_OUTPUT = 'outputResultsCDC';
         const ADMIN_PASSWORD = 'admin123';
         
-        // 全局变量
         let isAdminMode = false;
         let ongoingResults = [];
         let outputResults = [];
@@ -536,26 +504,21 @@
         let currentFileData = null;
         let currentFileName = null;
         
-        // 加载数据
         function loadDataFromStorage() {
             const savedOngoing = localStorage.getItem(STORAGE_KEY_ONGOING);
             const savedOutput = localStorage.getItem(STORAGE_KEY_OUTPUT);
-            
             ongoingResults = savedOngoing ? JSON.parse(savedOngoing) : [];
             outputResults = savedOutput ? JSON.parse(savedOutput) : [];
         }
         
-        // 保存数据
         function saveDataToStorage() {
             localStorage.setItem(STORAGE_KEY_ONGOING, JSON.stringify(ongoingResults));
             localStorage.setItem(STORAGE_KEY_OUTPUT, JSON.stringify(outputResults));
         }
         
-        // 图片预览
         function previewImage(input) {
             const preview = document.getElementById('imagePreview');
             const previewImg = document.getElementById('previewImg');
-            
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -570,15 +533,12 @@
             }
         }
         
-        // 文件预览
         function previewFile(input) {
             const filePreview = document.getElementById('filePreview');
             const fileNameSpan = document.getElementById('fileName');
-            
             if (input.files && input.files[0]) {
                 const file = input.files[0];
                 const fileSize = file.size / 1024 / 1024;
-                
                 if (fileSize > 10) {
                     alert('文件大小不能超过 10MB！');
                     input.value = '';
@@ -587,7 +547,6 @@
                     currentFileName = null;
                     return;
                 }
-                
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     currentFileData = e.target.result;
@@ -603,7 +562,6 @@
             }
         }
         
-        // 清除文件
         function clearFile() {
             const fileInput = document.getElementById('resultFile');
             const filePreview = document.getElementById('filePreview');
@@ -613,7 +571,6 @@
             currentFileName = null;
         }
         
-        // 更新管理员徽章
         function updateAdminBadge() {
             const badge = document.getElementById('adminBadge');
             if (isAdminMode) {
@@ -625,29 +582,21 @@
             }
         }
         
-        // 检查删除权限
         function canDelete(result) {
             if (isAdminMode) return true;
             const currentUploader = sessionStorage.getItem('uploaderId');
             return result.uploaderId === currentUploader;
         }
         
-        // 删除成果
         function deleteResult(type, id, event) {
             event.stopPropagation();
             event.preventDefault();
-            
-            const result = type === 'ongoing' 
-                ? ongoingResults.find(r => r.id === id)
-                : outputResults.find(r => r.id === id);
-            
+            const result = type === 'ongoing' ? ongoingResults.find(r => r.id === id) : outputResults.find(r => r.id === id);
             if (!result) return;
-            
             if (!canDelete(result)) {
                 alert('您没有权限删除此成果！\n只有管理员和上传者可以删除。');
                 return;
             }
-            
             if (confirm(`确定要删除成果「${result.title}」吗？`)) {
                 if (type === 'ongoing') {
                     ongoingResults = ongoingResults.filter(r => r.id !== id);
@@ -660,7 +609,6 @@
             }
         }
         
-        // 管理员相关
         function openAdminLoginModal() {
             document.getElementById('adminLoginModal').classList.add('active');
             document.getElementById('adminPassword').value = '';
@@ -686,13 +634,10 @@
         
         function checkAdminMode() {
             const saved = sessionStorage.getItem('isAdminMode');
-            if (saved === 'true') {
-                isAdminMode = true;
-            }
+            if (saved === 'true') isAdminMode = true;
             updateAdminBadge();
         }
         
-        // 生成上传者ID
         function generateUploaderId() {
             let id = sessionStorage.getItem('uploaderId');
             if (!id) {
@@ -702,12 +647,19 @@
             return id;
         }
         
-        // 渲染卡片
+        function downloadFile(dataUrl, fileName) {
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
         function renderResults() {
             const ongoingContainer = document.getElementById('ongoingResults');
             const outputContainer = document.getElementById('outputResults');
             
-            // 在研动态与进展
             if (ongoingResults.length === 0) {
                 ongoingContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">暂无在研动态，点击右上方按钮添加</div></div>`;
             } else {
@@ -717,7 +669,6 @@
                     const hrefAttr = hasLink ? `href="${result.link}" target="_blank"` : '';
                     const showDelete = canDelete(result);
                     const hasFile = result.file && result.fileName;
-                    
                     return `<${cardTag} class="result-card" ${hrefAttr}>
                         ${showDelete ? `<button class="delete-btn" onclick="deleteResult('ongoing', '${result.id}', event)">×</button>` : ''}
                         <div class="card-image">${result.image ? `<img src="${result.image}" alt="${result.title}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;">暂无图片</div>'}</div>
@@ -727,7 +678,6 @@
                 }).join('');
             }
             
-            // 阶段性产出成果
             if (outputResults.length === 0) {
                 outputContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📄</div><div class="empty-state-text">暂无产出成果，点击右上方按钮添加</div></div>`;
             } else {
@@ -737,7 +687,6 @@
                     const hrefAttr = hasLink ? `href="${result.link}" target="_blank"` : '';
                     const showDelete = canDelete(result);
                     const hasFile = result.file && result.fileName;
-                    
                     return `<${cardTag} class="result-card" ${hrefAttr}>
                         ${showDelete ? `<button class="delete-btn" onclick="deleteResult('output', '${result.id}', event)">×</button>` : ''}
                         <div class="card-image">${result.image ? `<img src="${result.image}" alt="${result.title}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;">暂无图片</div>'}</div>
@@ -748,17 +697,6 @@
             }
         }
         
-        // 下载文件函数
-        function downloadFile(dataUrl, fileName) {
-            const link = document.createElement('a');
-            link.href = dataUrl;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-        
-        // 添加成果相关
         function openAddResultModal() {
             document.getElementById('resultModal').classList.add('active');
             document.getElementById('addResultForm').reset();
@@ -791,48 +729,33 @@
                 uploaderId: generateUploaderId(),
                 createTime: new Date().toISOString()
             };
-            
             if (type === 'ongoing') {
                 ongoingResults.push(newResult);
             } else {
                 outputResults.push(newResult);
             }
-            
             saveDataToStorage();
             renderResults();
-            alert(`成果「${title}」已添加！鼠标悬停卡片可看到删除按钮。`);
+            alert(`成果「${title}」已添加！当前共有 ${type === 'ongoing' ? ongoingResults.length : outputResults.length} 个成果。`);
         }
         
-        // 初始化
         loadDataFromStorage();
         checkAdminMode();
         renderResults();
         
-        // 表单提交
         document.getElementById('addResultForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const type = document.getElementById('resultType').value;
             const title = document.getElementById('resultTitle').value.trim();
             const link = document.getElementById('resultLink').value.trim();
-            
             if (!title) {
                 alert('请输入成果名称');
                 return;
             }
-            
-            if (!currentImageData) {
-                if (confirm('尚未上传封面图片，确定要添加吗？')) {
-                    addNewResult(type, title, null, link, currentFileData, currentFileName);
-                    closeModal();
-                }
-                return;
-            }
-            
             addNewResult(type, title, currentImageData, link, currentFileData, currentFileName);
             closeModal();
         });
         
-        // 模态框背景关闭
         document.getElementById('resultModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
@@ -841,7 +764,6 @@
             if (e.target === this) closeAdminLoginModal();
         });
         
-        // 右键退出管理员模式
         document.getElementById('adminBadge').addEventListener('contextmenu', function(e) {
             e.preventDefault();
             if (isAdminMode && confirm('退出管理员模式？')) {
