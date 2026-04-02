@@ -510,7 +510,7 @@ footer {
     color: white;
     padding: 1.2vh 1vw;
     margin: 0;
-    font-size:  clamp(1rem, 1.2vw, 1.5rem);
+    font-size:  clamp(1.1rem, 1.3vw, 1.5rem);
     font-weight: 600;
     text-align: center;
     letter-spacing: 0.5px;
