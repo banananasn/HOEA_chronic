@@ -36,7 +36,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
 
-        /* 删除按钮 - 悬停时显示 */
+        /* 删除按钮 - 右上角 */
         .delete-btn {
             position: absolute;
             top: 8px;
@@ -67,22 +67,36 @@
             transform: scale(1.05);
         }
 
-        /* 下载按钮样式 */
+        /* 下载按钮 - 左上角 */
         .download-btn {
-            display: inline-block;
-            margin: 0.5rem 1rem 1rem;
-            padding: 0.4rem 0.8rem;
-            background: #8B0000;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(139, 0, 0, 0.9);
             color: white;
-            border-radius: 20px;
-            font-size: 0.75rem;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             text-decoration: none;
-            text-align: center;
-            transition: background 0.2s ease;
         }
 
         .download-btn:hover {
-            background: #a00000;
+            background: #28a745;
+            transform: scale(1.05);
+        }
+
+        .result-card:hover .download-btn {
+            opacity: 1;
         }
 
         .card-image {
@@ -435,23 +449,13 @@
         <!-- 板块一：在研动态与进展 -->
         <div class="research-section">
             <h3 class="section-title">在研动态与进展</h3>
-            <div class="results-cards-container" id="ongoingResults">
-                <div class="empty-state">
-                    <div class="empty-state-icon">📋</div>
-                    <div class="empty-state-text">暂无在研动态，点击右上方按钮添加</div>
-                </div>
-            </div>
+            <div class="results-cards-container" id="ongoingResults"></div>
         </div>
 
         <!-- 板块二：阶段性产出成果 -->
         <div class="research-section">
             <h3 class="section-title">阶段性产出成果</h3>
-            <div class="results-cards-container" id="outputResults">
-                <div class="empty-state">
-                    <div class="empty-state-icon">📄</div>
-                    <div class="empty-state-text">暂无产出成果，点击右上方按钮添加</div>
-                </div>
-            </div>
+            <div class="results-cards-container" id="outputResults"></div>
         </div>
 
     </main>
@@ -718,45 +722,71 @@
             const ongoingContainer = document.getElementById('ongoingResults');
             const outputContainer = document.getElementById('outputResults');
             
-            // 在研动态与进展
+            // 渲染在研动态
             if (ongoingResults.length === 0) {
                 ongoingContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">暂无在研动态，点击右上方按钮添加</div></div>`;
             } else {
                 ongoingContainer.innerHTML = ongoingResults.map(result => {
                     const hasLink = result.link && result.link.trim() !== '';
-                    const cardTag = hasLink ? 'a' : 'div';
-                    const hrefAttr = hasLink ? `href="${result.link}" target="_blank"` : '';
-                    const showDelete = canDelete(result);
                     const hasFile = result.file && result.fileName;
+                    const showDelete = canDelete(result);
                     
-                    return `<${cardTag} class="result-card" ${hrefAttr}>
+                    return `<div class="result-card" data-link="${hasLink ? result.link : ''}">
+                        ${hasFile ? `<div class="download-btn" data-file="${result.file}" data-filename="${result.fileName}">📎</div>` : ''}
                         ${showDelete ? `<button class="delete-btn" onclick="deleteResult('ongoing', '${result.id}', event)">×</button>` : ''}
                         <div class="card-image">${result.image ? `<img src="${result.image}" alt="${result.title}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;">暂无图片</div>'}</div>
                         <div class="card-title">${result.title}</div>
-                        ${hasFile ? `<div class="download-btn" onclick="event.stopPropagation();downloadFile('${result.file}', '${result.fileName}')">📎 下载附件</div>` : ''}
-                    </${cardTag}>`;
+                    </div>`;
                 }).join('');
             }
             
-            // 阶段性产出成果
+            // 渲染产出成果
             if (outputResults.length === 0) {
                 outputContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📄</div><div class="empty-state-text">暂无产出成果，点击右上方按钮添加</div></div>`;
             } else {
                 outputContainer.innerHTML = outputResults.map(result => {
                     const hasLink = result.link && result.link.trim() !== '';
-                    const cardTag = hasLink ? 'a' : 'div';
-                    const hrefAttr = hasLink ? `href="${result.link}" target="_blank"` : '';
-                    const showDelete = canDelete(result);
                     const hasFile = result.file && result.fileName;
+                    const showDelete = canDelete(result);
                     
-                    return `<${cardTag} class="result-card" ${hrefAttr}>
+                    return `<div class="result-card" data-link="${hasLink ? result.link : ''}">
+                        ${hasFile ? `<div class="download-btn" data-file="${result.file}" data-filename="${result.fileName}">📎</div>` : ''}
                         ${showDelete ? `<button class="delete-btn" onclick="deleteResult('output', '${result.id}', event)">×</button>` : ''}
                         <div class="card-image">${result.image ? `<img src="${result.image}" alt="${result.title}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;">暂无图片</div>'}</div>
                         <div class="card-title">${result.title}</div>
-                        ${hasFile ? `<div class="download-btn" onclick="event.stopPropagation();downloadFile('${result.file}', '${result.fileName}')">📎 下载附件</div>` : ''}
-                    </${cardTag}>`;
+                    </div>`;
                 }).join('');
             }
+            
+            // 绑定卡片点击事件（处理链接跳转）
+            document.querySelectorAll('.result-card').forEach(card => {
+                // 移除旧的事件避免重复绑定
+                const newCard = card.cloneNode(true);
+                card.parentNode.replaceChild(newCard, card);
+                
+                const link = newCard.getAttribute('data-link');
+                if (link && link.trim() !== '') {
+                    newCard.addEventListener('click', function(e) {
+                        // 如果点击的是下载按钮或删除按钮，不跳转
+                        if (e.target.classList.contains('download-btn') || e.target.classList.contains('delete-btn')) {
+                            return;
+                        }
+                        window.location.href = link;
+                    });
+                }
+            });
+            
+            // 绑定下载按钮事件
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();  // 阻止事件冒泡，防止触发卡片跳转
+                    const fileData = this.getAttribute('data-file');
+                    const fileName = this.getAttribute('data-filename');
+                    if (fileData && fileName) {
+                        downloadFile(fileData, fileName);
+                    }
+                });
+            });
         }
         
         // 添加成果相关
@@ -801,7 +831,7 @@
             
             saveDataToStorage();
             renderResults();
-            alert(`成果「${title}」已添加！鼠标悬停卡片可看到删除按钮。`);
+            alert(`成果「${title}」已添加！当前共有 ${type === 'ongoing' ? ongoingResults.length : outputResults.length} 个成果。`);
         }
         
         // 初始化
@@ -818,14 +848,6 @@
             
             if (!title) {
                 alert('请输入成果名称');
-                return;
-            }
-            
-            if (!currentImageData) {
-                if (confirm('尚未上传封面图片，确定要添加吗？')) {
-                    addNewResult(type, title, null, link, currentFileData, currentFileName);
-                    closeModal();
-                }
                 return;
             }
             
