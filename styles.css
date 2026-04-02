@@ -508,9 +508,9 @@ footer {
     position: relative;
     z-index: 2;
     color: white;
-    padding: 1vh 0.8vw;
+    padding: 1.2vh 1vw;
     margin: 0;
-    font-size:  clamp(0.8rem, 1vw, 1.2rem);
+    font-size:  clamp(1rem, 1.2vw, 1.5rem);
     font-weight: 600;
     text-align: center;
     letter-spacing: 0.5px;
