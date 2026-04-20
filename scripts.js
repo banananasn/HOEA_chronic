@@ -6,7 +6,7 @@ let TEAM_PASSWORD = null;
 const WORKER_URL = 'https://heoa-github.55d84xnpx5.workers.dev/';
 
 // 通用 API 请求函数（通过 Worker 代理）
-async function apiRequest(endpoint, method, body = null) {
+async function apiRequest(endpoint, method, body = null, requireAuth = false) {
     // 如果没有密码，先弹窗获取
     if (!TEAM_PASSWORD) {
         TEAM_PASSWORD = localStorage.getItem('team_password');
