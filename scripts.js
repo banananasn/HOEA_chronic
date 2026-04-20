@@ -1,31 +1,42 @@
-// ========== GitHub API 配置 ==========
-const GITHUB_OWNER = 'banananasn';
-const GITHUB_REPO = 'project-results-data';
-const GITHUB_TOKEN = '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';  // 替换成生成的 token //
-
-// 通用 GitHub API 请求函数
-async function githubRequest(endpoint, method, body = null) {
-    const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/${endpoint}`;
-    const headers = {
-        'Authorization': `token ${GITHUB_TOKEN}`,
-        'Accept': 'application/vnd.github.v3+json'
-    };
-    if (body) {
-        headers['Content-Type'] = 'application/json';
+// ========== 团队密码配置 ==========
+// 从 localStorage 读取密码，如果没有就弹窗让用户输入
+let TEAM_PASSWORD = localStorage.getItem('team_password');
+if (!TEAM_PASSWORD) {
+    TEAM_PASSWORD = prompt('请输入团队密码：');
+    if (TEAM_PASSWORD) {
+        localStorage.setItem('team_password', TEAM_PASSWORD);
     }
+}
+
+// Cloudflare Worker 地址（需要替换成你的实际地址）
+const WORKER_URL = 'https://heoa-github.55d84xnpx5.workers.dev/';
+
+// 通用 API 请求函数（通过 Worker 代理）
+async function apiRequest(endpoint, method, body = null) {
+    const response = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            password: TEAM_PASSWORD,
+            endpoint: endpoint,
+            method: method,
+            body: body
+        })
+    });
     
-    const response = await fetch(url, { method, headers, body: body ? JSON.stringify(body) : null });
     if (!response.ok) {
         const error = await response.text();
-        throw new Error(`GitHub API 错误: ${response.status} - ${error}`);
+        throw new Error(`请求失败: ${response.status} - ${error}`);
     }
     return response.json();
 }
 
 // 读取所有成果（从 GitHub Issues）
-async function loadResultsFromGitHub(storageKey) {
+async function loadResultsFromGitHub() {
     try {
-        const issues = await githubRequest('issues', 'GET');
+        const issues = await apiRequest('issues', 'GET');
         // 过滤出带有"成果"标签的 Issue
         const resultIssues = issues.filter(issue => 
             issue.labels && issue.labels.some(label => label.name === '成果')
@@ -67,25 +78,28 @@ async function loadResultsFromGitHub(storageKey) {
         return [];
     }
 }
+
 // 添加新成果（创建 GitHub Issue）
 async function addResultToGitHub(type, title, imageData, link, fileData, fileName) {
-    const body = JSON.stringify({
+    const body = {
         image: imageData || null,
         link: link || null,
         file: fileData || null,
         fileName: fileName || null
-    });
+    };
     const labels = ['成果'];
     if (type === 'ongoing') {
         labels.push('在研动态');
     } else {
         labels.push('产出成果');
     }
-    const newIssue = await githubRequest('issues', 'POST', {
+    
+    const newIssue = await apiRequest('issues', 'POST', {
         title: title,
-        body: body,
+        body: JSON.stringify(body),
         labels: labels
-    });   
+    });
+    
     return {
         id: newIssue.id,
         title: newIssue.title,
@@ -179,7 +193,7 @@ function loadResultsCards() {
     
     resultsCardsData.forEach(item => {
         const card = document.createElement('div');
-        card.className = 'results-card';  // 可单独定义样式
+        card.className = 'results-card';
         card.onclick = () => window.location.href = item.url;
         
         card.innerHTML = `
@@ -191,7 +205,6 @@ function loadResultsCards() {
         container.appendChild(card);
     });
 }
-
 
 // ========== 页面加载时执行 ==========
 if (document.getElementById('news-cards')) {
@@ -205,4 +218,3 @@ if (document.getElementById('results-cards')) {
 if (document.getElementById("interview-links")) {
     loadInterviewLinks();
 }
-
