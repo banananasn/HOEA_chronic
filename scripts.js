@@ -1,18 +1,25 @@
 // ========== 团队密码配置 ==========
-// 从 localStorage 读取密码，如果没有就弹窗让用户输入
-let TEAM_PASSWORD = localStorage.getItem('team_password');
-if (!TEAM_PASSWORD) {
-    TEAM_PASSWORD = prompt('请输入团队密码：');
-    if (TEAM_PASSWORD) {
-        localStorage.setItem('team_password', TEAM_PASSWORD);
-    }
-}
+// 先不读取密码，等需要上传时再弹窗
+let TEAM_PASSWORD = null;
 
 // Cloudflare Worker 地址（需要替换成你的实际地址）
 const WORKER_URL = 'https://heoa-github.55d84xnpx5.workers.dev/';
 
 // 通用 API 请求函数（通过 Worker 代理）
 async function apiRequest(endpoint, method, body = null) {
+    // 如果没有密码，先弹窗获取
+    if (!TEAM_PASSWORD) {
+        TEAM_PASSWORD = localStorage.getItem('team_password');
+        if (!TEAM_PASSWORD) {
+            TEAM_PASSWORD = prompt('请输入团队密码：');
+            if (TEAM_PASSWORD) {
+                localStorage.setItem('team_password', TEAM_PASSWORD);
+            } else {
+                throw new Error('需要输入密码才能操作');
+            }
+        }
+    }
+    
     const response = await fetch(WORKER_URL, {
         method: 'POST',
         headers: {
