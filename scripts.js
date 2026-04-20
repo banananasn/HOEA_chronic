@@ -43,7 +43,7 @@ async function apiRequest(endpoint, method, body = null) {
 // 读取所有成果（从 GitHub Issues）
 async function loadResultsFromGitHub() {
     try {
-        const issues = await apiRequest('issues', 'GET');
+        const issues = await apiRequest('issues', 'GET', null, false);
         // 过滤出带有"成果"标签的 Issue
         const resultIssues = issues.filter(issue => 
             issue.labels && issue.labels.some(label => label.name === '成果')
@@ -102,10 +102,10 @@ async function addResultToGitHub(type, title, imageData, link, fileData, fileNam
     }
     
     const newIssue = await apiRequest('issues', 'POST', {
-        title: title,
-        body: JSON.stringify(body),
-        labels: labels
-    });
+    title: title,
+    body: JSON.stringify(body),
+    labels: labels
+}, true);
     
     return {
         id: newIssue.id,
