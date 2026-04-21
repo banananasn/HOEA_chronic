@@ -3,7 +3,7 @@
 let TEAM_PASSWORD = null;
 
 // Cloudflare Worker 地址（需要替换成你的实际地址）
-const WORKER_URL = 'https://test.55d84xnpx5.workers.dev/';
+const WORKER_URL = 'https://heoa-chronic-github.55d84xnpx5.workers.dev/';
 
 // 通用 API 请求函数（通过 Worker 代理）
 async function apiRequest(endpoint, method, body = null, requireAuth = false) {
