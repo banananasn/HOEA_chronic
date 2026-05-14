@@ -1,52 +1,59 @@
-// ========== 纯前端 GitHub API 调用 ==========
+// ========== 团队密码配置 ==========
+// 先不读取密码，等需要上传时再弹窗
+let TEAM_PASSWORD = null;
 
-// 获取 GitHub Token（从 localStorage 读取，没有则弹窗提示）
-function getGitHubToken() {
-    let token = localStorage.getItem('github_token');
-    if (!token) {
-        token = prompt('请输入 GitHub Token（需要 repo 权限）：');
-        if (token) {
-            localStorage.setItem('github_token', token);
+// Cloudflare Worker 地址（需要替换成你的实际地址）
+const WORKER_URL = 'https://heoa-chronic-github.55d84xnpx5.workers.dev/';
+
+// 通用 API 请求函数（通过 Worker 代理）
+async function apiRequest(endpoint, method, body = null, requireAuth = false) {
+    // 只有需要认证的操作（如添加成果）才检查密码
+    if (requireAuth) {
+        if (!TEAM_PASSWORD) {
+            TEAM_PASSWORD = localStorage.getItem('team_password');
+            if (!TEAM_PASSWORD) {
+                TEAM_PASSWORD = prompt('请输入团队密码：');
+                if (TEAM_PASSWORD) {
+                    localStorage.setItem('team_password', TEAM_PASSWORD);
+                } else {
+                    throw new Error('需要输入密码才能添加成果');
+                }
+            }
         }
     }
-    return token;
-}
-
-// 通用 GitHub API 请求函数
-async function githubRequest(endpoint, method, body = null) {
-    const token = getGitHubToken();
-    if (!token) throw new Error('未提供 GitHub Token');
-    
-    const url = `https://api.github.com/repos/banananasn/project-results-data/${endpoint}`;
-    const headers = {
-        'Authorization': `token ${token}`,
-        'Accept': 'application/vnd.github.v3+json'
-    };
-    if (body) {
-        headers['Content-Type'] = 'application/json';
-    }
-    
-    const response = await fetch(url, {
+    const requestBody = {
+        endpoint: endpoint,
         method: method,
-        headers: headers,
-        body: body ? JSON.stringify(body) : undefined
+        body: body
+    };
+    // 只有需要认证时才发送密码
+    if (requireAuth && TEAM_PASSWORD) {
+        requestBody.password = TEAM_PASSWORD;
+    }
+    const response = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
     });
-    
     if (!response.ok) {
         const error = await response.text();
-        throw new Error(`GitHub API 错误: ${response.status} - ${error}`);
+        throw new Error(`请求失败: ${response.status} - ${error}`);
     }
     return response.json();
 }
 
-// 读取所有成果
+// 读取所有成果（从 GitHub Issues）
 async function loadResultsFromGitHub() {
     try {
-        const issues = await githubRequest('issues', 'GET');
+        const issues = await apiRequest('issues', 'GET', null, false);
+        // 过滤出带有"成果"标签的 Issue
         const resultIssues = issues.filter(issue => 
             issue.labels && issue.labels.some(label => label.name === '成果')
         );
         
+        // 转换为成果数据格式
         const results = [];
         for (const issue of resultIssues) {
             let bodyData = {};
@@ -56,13 +63,14 @@ async function loadResultsFromGitHub() {
                 console.error('解析 Issue body 失败:', e);
             }
             
+            // 判断类型
             let type = null;
             if (issue.labels && issue.labels.some(l => l.name === '在研动态')) {
                 type = 'ongoing';
             } else if (issue.labels && issue.labels.some(l => l.name === '产出成果')) {
                 type = 'output';
             }
-            
+     
             results.push({
                 id: issue.id,
                 title: issue.title,
@@ -82,7 +90,7 @@ async function loadResultsFromGitHub() {
     }
 }
 
-// 添加新成果
+// 添加新成果（创建 GitHub Issue）
 async function addResultToGitHub(type, title, imageData, link, fileData, fileName) {
     const body = {
         image: imageData || null,
@@ -97,11 +105,11 @@ async function addResultToGitHub(type, title, imageData, link, fileData, fileNam
         labels.push('产出成果');
     }
     
-    const newIssue = await githubRequest('issues', 'POST', {
-        title: title,
-        body: JSON.stringify(body),
-        labels: labels
-    });
+    const newIssue = await apiRequest('issues', 'POST', {
+    title: title,
+    body: JSON.stringify(body),
+    labels: labels
+}, true);
     
     return {
         id: newIssue.id,
@@ -130,8 +138,12 @@ const newsCardsData = [
     }
 ];
 
-const interviewLinks = [];
+// ========== 调研访谈链接列表 ==========
+const interviewLinks = [
+    // { title: "2026年3月 某某专家访谈", url: "https://example.com/interview1" },
+];
 
+// ========== 研究成果文档列表 ==========
 const resultsCardsData = [
     { 
         title: "《柳叶刀-西太平洋》期刊发表中国版门急诊服务敏感疾病目录", 
@@ -145,13 +157,16 @@ const resultsCardsData = [
     }
 ];
 
+// ========== 动态生成会议资讯卡片 ==========
 function loadNewsCards() {
     const container = document.getElementById('news-cards');
     if (!container) return;
+    
     newsCardsData.forEach(item => {
         const card = document.createElement('div');
         card.className = 'news-card';
         card.onclick = () => window.location.href = item.url;
+        
         card.innerHTML = `
             <div class="card-image">
                 <img src="${item.image}" alt="${item.title}">
@@ -162,9 +177,11 @@ function loadNewsCards() {
     });
 }
 
+// ========== 动态填充调研访谈 ==========
 function loadInterviewLinks() {
     const interviewList = document.getElementById("interview-links");
     if (!interviewList) return;
+    
     if (interviewLinks.length > 0) {
         interviewList.innerHTML = "";
         interviewLinks.forEach(link => {
@@ -180,13 +197,16 @@ function loadInterviewLinks() {
     }
 }
 
+// ========== 动态生成研究成果卡片 ==========
 function loadResultsCards() {
     const container = document.getElementById('results-cards');
     if (!container) return;
+    
     resultsCardsData.forEach(item => {
         const card = document.createElement('div');
         card.className = 'results-card';
         card.onclick = () => window.location.href = item.url;
+        
         card.innerHTML = `
             <div class="card-image">
                 <img src="${item.image}" alt="${item.title}">
@@ -197,6 +217,15 @@ function loadResultsCards() {
     });
 }
 
-if (document.getElementById('news-cards')) loadNewsCards();
-if (document.getElementById('results-cards')) loadResultsCards();
-if (document.getElementById("interview-links")) loadInterviewLinks();
+// ========== 页面加载时执行 ==========
+if (document.getElementById('news-cards')) {
+    loadNewsCards();
+}
+
+if (document.getElementById('results-cards')) {
+    loadResultsCards();
+}
+
+if (document.getElementById("interview-links")) {
+    loadInterviewLinks();
+}
