@@ -1,5 +1,3 @@
-// ========== 纯前端 GitHub API 调用 ==========
-
 // 获取 GitHub Token（仅在需要上传时调用）
 let pendingTokenPromise = null;
 
