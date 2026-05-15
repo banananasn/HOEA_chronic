@@ -1,36 +1,61 @@
-// ========== 纯前端 GitHub API 调用（用户首次使用时输入 Token） ==========
+// ========== 纯前端 GitHub API 调用 ==========
 
-// 获取 GitHub Token（从 localStorage 读取，没有则弹窗提示）
-function getGitHubToken() {
+// 获取 GitHub Token（仅在需要上传时调用）
+let pendingTokenPromise = null;
+
+async function getGitHubTokenForUpload() {
+    // 先检查是否已有 Token
     let token = localStorage.getItem('github_token');
-    if (!token) {
-        token = prompt('请输入 GitHub Token：\n\n（请联系管理员获取）');
-        if (token) {
-            localStorage.setItem('github_token', token);
+    if (token) return token;
+    
+    // 没有 Token，弹窗提示
+    if (pendingTokenPromise) return pendingTokenPromise;
+    
+    pendingTokenPromise = new Promise((resolve, reject) => {
+        const userToken = prompt('请输入 GitHub Token：\n\n（请联系管理员获取）');
+        if (userToken) {
+            localStorage.setItem('github_token', userToken);
+            resolve(userToken);
         } else {
-            throw new Error('未提供 GitHub Token');
+            reject(new Error('未提供 GitHub Token'));
         }
-    }
-    return token;
+        pendingTokenPromise = null;
+    });
+    
+    return pendingTokenPromise;
 }
 
-// 通用 GitHub API 请求函数
-async function githubRequest(endpoint, method, body = null) {
-    const token = getGitHubToken();
+// 读取成果时不需要 Token（公开读取）
+async function githubRequestRead(endpoint) {
+    // 注意：读取 Issues 不需要认证，因为是公开仓库
+    const url = `https://api.github.com/repos/banananasn/project-results-data/${endpoint}`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/vnd.github.v3+json'
+        }
+    });
     
+    if (!response.ok) {
+        throw new Error(`GitHub API 错误: ${response.status}`);
+    }
+    return response.json();
+}
+
+// 写入成果时需要 Token
+async function githubRequestWrite(endpoint, method, body) {
+    const token = await getGitHubTokenForUpload();
     const url = `https://api.github.com/repos/banananasn/project-results-data/${endpoint}`;
     const headers = {
         'Authorization': `token ${token}`,
-        'Accept': 'application/vnd.github.v3+json'
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
     };
-    if (body) {
-        headers['Content-Type'] = 'application/json';
-    }
     
     const response = await fetch(url, {
         method: method,
         headers: headers,
-        body: body ? JSON.stringify(body) : undefined
+        body: JSON.stringify(body)
     });
     
     if (!response.ok) {
@@ -40,10 +65,10 @@ async function githubRequest(endpoint, method, body = null) {
     return response.json();
 }
 
-// 读取所有成果
+// 读取所有成果（公开，不需要 Token）
 async function loadResultsFromGitHub() {
     try {
-        const issues = await githubRequest('issues', 'GET');
+        const issues = await githubRequestRead('issues');
         const resultIssues = issues.filter(issue => 
             issue.labels && issue.labels.some(label => label.name === '成果')
         );
@@ -83,7 +108,7 @@ async function loadResultsFromGitHub() {
     }
 }
 
-// 添加新成果
+// 添加新成果（需要 Token，会触发弹窗）
 async function addResultToGitHub(type, title, imageData, link, fileData, fileName) {
     const body = {
         image: imageData || null,
@@ -98,7 +123,7 @@ async function addResultToGitHub(type, title, imageData, link, fileData, fileNam
         labels.push('产出成果');
     }
     
-    const newIssue = await githubRequest('issues', 'POST', {
+    const newIssue = await githubRequestWrite('issues', 'POST', {
         title: title,
         body: JSON.stringify(body),
         labels: labels
@@ -117,7 +142,7 @@ async function addResultToGitHub(type, title, imageData, link, fileData, fileNam
     };
 }
 
-// ========== 以下是你原有的静态数据函数 ==========
+// ========== 以下是你原有的静态数据函数（保持不变） ==========
 
 const newsCardsData = [
     { 
