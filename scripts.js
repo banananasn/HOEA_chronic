@@ -155,7 +155,11 @@ const newsCardsData = [
     }
 ];
 
-const interviewLinks = [];
+const interviewLinks = [
+    { title: "2026年4月7日 项目组赴四川省肿瘤医院开展调研学习", url: "interview.html?id=260407" },
+    { title: "2026年4月8日 项目组赴华西医院开展调研学习", url: "interview.html?id=260408" },
+    { title: "2026年4月15日 项目组赴四川省第二中医医院开展调研学习", url: "interview.html?id=260415" },
+];
 
 const resultsCardsData = [
     { 
