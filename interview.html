@@ -31,7 +31,7 @@
 
         /* 单独调整 interview 页面的背景 */
         body {
-            background-size: auto !important;
+            background-size: 100% !important;
             background-position: top center !important;
             background-attachment: scroll !important;
         }
@@ -128,7 +128,7 @@
                 container.innerHTML = `
                     <h2>${data.title}</h2>
                     <div class="interview-date" style="color: #8B0000; margin-bottom: 20px;">${data.date}</div>
-                    ${data.image ? `<img src="${data.image}" alt="${data.title}" style="width: 100%; border-radius: 12px; margin-bottom: 20px;">` : ''}
+                    ${data.image ? `<img src="${data.image}" alt="${data.title}" style="width: 70%; display: block; margin: 0 auto; border-radius: 12px; margin-bottom: 20px;">` : ''}
                     ${data.paragraphs.map(p => `<p>${p}</p>`).join('')}
                 `;
             } else {
