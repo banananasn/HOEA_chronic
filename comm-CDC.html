@@ -33,9 +33,10 @@
         .comm-card-image {
             flex: 1;
             min-width: 100px;
-            max-width: 200px;
+            max-width: 160px;
             background-color: #f0f2f5;
             overflow: hidden;
+            margin: 10px 0 10px 10px;    /* 图片与卡片边缘留空隙 */
         }
         .comm-card-image img {
             width: 100%;
@@ -87,6 +88,11 @@
             border-radius: 16px;
             font-style: italic;
         }
+       /* 增加整个页面的左右边距 */
+        .sub-page-content {
+            padding-left: 10% !important;
+            padding-right: 10% !important;
+    }
     </style>
 </head>
 <body class="sub-page">
