@@ -344,13 +344,18 @@ footer {
 .two-columns {
     display: flex;
     flex-wrap: wrap;
-    gap: 15vw;
+    gap: 5vw;
     justify-content: space-between;
 }
-/* 每个板块占一半宽度 */
-.dynamic-section {
+/* 左侧：会议资讯 */
+.dynamic-section:first-child {
+    flex: 0.7;
+    min-width: 200px;
+}
+/* 右侧：调研访谈 */
+.dynamic-section:last-child {
     flex: 1;
-    min-width: 260px;  /* 最小宽度，防止太窄时变形 */
+    min-width: 200px;
 }
 /* 板块标题样式 */
 .dynamic-section h2 {
@@ -411,7 +416,7 @@ footer {
 .news-cards-container {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
 }
 .news-card {
     background: #ffffff;
