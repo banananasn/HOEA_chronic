@@ -544,24 +544,19 @@ async function addNewResult(type, title, imageData, link, fileData, fileName) {
     if (!imageData) {
         alert('请上传封面图片');
         return;
-    }  
-try {
-        // 先保存到 GitHub
+    }
+    
+    try {
+        // 保存到 GitHub
         await saveDataToGitHub(type, title, imageData, link, fileData, fileName);
         
-        // 重新从 GitHub 加载所有数据（确保数据同步）
+        // 重新从 GitHub 加载所有数据（这一步会自动更新 ongoingResults/outputResults 和 localStorage）
         await loadDataFromGitHub();
         
-        if (type === 'ongoing') {
-            ongoingResults.push(newResult);
-            localStorage.setItem(CURRENT_ONGOING_KEY, JSON.stringify(ongoingResults));
-        } else {
-            outputResults.push(newResult);
-            localStorage.setItem(CURRENT_OUTPUT_KEY, JSON.stringify(outputResults));
-        }      
         renderResults();
         alert(`成果「${title}」已添加！`);
     } catch (error) {
+        console.error('添加失败:', error);
         alert('添加失败：' + error.message);
     }
 }
@@ -592,8 +587,17 @@ if (document.getElementById('addResultForm')) {
         const title = document.getElementById('resultTitle').value.trim();
         const link = document.getElementById('resultLink').value.trim();
         
+        // 必填项验证
+        if (!type) {
+            alert('请选择成果类型');
+            return;
+        }
         if (!title) {
             alert('请输入成果名称');
+            return;
+        }
+        if (!currentImageData) {
+            alert('请上传封面图片');
             return;
         }
         
