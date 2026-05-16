@@ -234,3 +234,387 @@ function loadResultsCards() {
 if (document.getElementById('news-cards')) loadNewsCards();
 if (document.getElementById('results-cards')) loadResultsCards();
 if (document.getElementById("interview-links")) loadInterviewLinks();
+
+
+// ========== 成果页面核心函数 ==========（这后面所有的代码都是让成果可以保存在云端而不是本地的代码）
+// 当前页面的存储键（由每个成果页面调用设置）
+let CURRENT_ONGOING_KEY = 'ongoingResults';
+let CURRENT_OUTPUT_KEY = 'outputResults';
+
+function setStorageKeys(ongoingKey, outputKey) {
+    CURRENT_ONGOING_KEY = ongoingKey;
+    CURRENT_OUTPUT_KEY = outputKey;
+}
+
+// 全局变量
+let isAdminMode = false;
+let ongoingResults = [];
+let outputResults = [];
+let currentImageData = null;
+let currentFileData = null;
+let currentFileName = null;
+
+const ADMIN_PASSWORD = 'admin123';
+
+// 从 GitHub 加载数据并保存到 localStorage
+async function loadDataFromGitHub() {
+    const allResults = await loadResultsFromGitHub();
+    ongoingResults = allResults.filter(r => r.type === 'ongoing');
+    outputResults = allResults.filter(r => r.type === 'output');
+    
+    // 保存到 localStorage
+    localStorage.setItem(CURRENT_ONGOING_KEY, JSON.stringify(ongoingResults));
+    localStorage.setItem(CURRENT_OUTPUT_KEY, JSON.stringify(outputResults));
+    
+    renderResults();
+}
+
+// 保存数据到 GitHub
+async function saveDataToGitHub(type, title, imageData, link, fileData, fileName) {
+    return await addResultToGitHub(type, title, imageData, link, fileData, fileName);
+}
+
+// 渲染卡片
+function renderResults() {
+    const ongoingContainer = document.getElementById('ongoingResults');
+    const outputContainer = document.getElementById('outputResults');
+    
+    if (!ongoingContainer && !outputContainer) return;
+    
+    if (ongoingContainer) {
+        if (ongoingResults.length === 0) {
+            ongoingContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">暂无在研动态，点击右上方按钮添加</div></div>`;
+        } else {
+            ongoingContainer.innerHTML = ongoingResults.map(result => {
+                const hasLink = result.link && result.link.trim() !== '';
+                const hasFile = result.file && result.fileName;
+                const showDelete = canDelete(result);
+                
+                return `<div class="result-card" data-link="${hasLink ? result.link : ''}">
+                    ${hasFile ? `<div class="download-btn" data-file="${result.file}" data-filename="${result.fileName}">📎</div>` : ''}
+                    ${showDelete ? `<button class="delete-btn" onclick="deleteResult('ongoing', '${result.id}', event)">×</button>` : ''}
+                    <div class="card-image">${result.image ? `<img src="${result.image}" alt="${result.title}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;">暂无图片</div>'}</div>
+                    <div class="card-title">${result.title}</div>
+                </div>`;
+            }).join('');
+        }
+    }
+    
+    if (outputContainer) {
+        if (outputResults.length === 0) {
+            outputContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📄</div><div class="empty-state-text">暂无产出成果，点击右上方按钮添加</div></div>`;
+        } else {
+            outputContainer.innerHTML = outputResults.map(result => {
+                const hasLink = result.link && result.link.trim() !== '';
+                const hasFile = result.file && result.fileName;
+                const showDelete = canDelete(result);
+                
+                return `<div class="result-card" data-link="${hasLink ? result.link : ''}">
+                    ${hasFile ? `<div class="download-btn" data-file="${result.file}" data-filename="${result.fileName}">📎</div>` : ''}
+                    ${showDelete ? `<button class="delete-btn" onclick="deleteResult('output', '${result.id}', event)">×</button>` : ''}
+                    <div class="card-image">${result.image ? `<img src="${result.image}" alt="${result.title}">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;">暂无图片</div>'}</div>
+                    <div class="card-title">${result.title}</div>
+                </div>`;
+            }).join('');
+        }
+    }
+    
+    // 绑定卡片点击事件
+    document.querySelectorAll('.result-card').forEach(card => {
+        const newCard = card.cloneNode(true);
+        card.parentNode.replaceChild(newCard, card);
+        const link = newCard.getAttribute('data-link');
+        if (link && link.trim() !== '') {
+            newCard.addEventListener('click', function(e) {
+                if (e.target.classList.contains('download-btn') || e.target.classList.contains('delete-btn')) {
+                    return;
+                }
+                window.location.href = link;
+            });
+        }
+    });
+    
+    // 绑定下载按钮事件
+    document.querySelectorAll('.download-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const fileData = this.getAttribute('data-file');
+            const fileName = this.getAttribute('data-filename');
+            if (fileData && fileName) {
+                downloadFile(fileData, fileName);
+            }
+        });
+    });
+}
+
+// 删除成果
+async function deleteResult(type, id, event) {
+    event.stopPropagation();
+    event.preventDefault();
+    
+    const result = type === 'ongoing' 
+        ? ongoingResults.find(r => r.id === id)
+        : outputResults.find(r => r.id === id);
+    
+    if (!result) return;
+    
+    if (!isAdminMode) {
+        alert('请先进入管理员模式（点击右下角红色按钮，输入 admin123）');
+        return;
+    }
+    
+    if (confirm(`确定要删除成果「${result.title}」吗？`)) {
+        try {
+            await githubRequestWrite(`issues/${id}`, 'PATCH', { state: 'closed' });
+            
+            if (type === 'ongoing') {
+                ongoingResults = ongoingResults.filter(r => r.id !== id);
+                localStorage.setItem(CURRENT_ONGOING_KEY, JSON.stringify(ongoingResults));
+            } else {
+                outputResults = outputResults.filter(r => r.id !== id);
+                localStorage.setItem(CURRENT_OUTPUT_KEY, JSON.stringify(outputResults));
+            }
+            renderResults();
+            alert('删除成功！');
+        } catch (error) {
+            alert('删除失败：' + error.message);
+        }
+    }
+}
+
+// 检查删除权限
+function canDelete(result) {
+    return isAdminMode;
+}
+
+// 更新管理员徽章
+function updateAdminBadge() {
+    const badge = document.getElementById('adminBadge');
+    if (!badge) return;
+    if (isAdminMode) {
+        badge.innerHTML = '👑 管理员模式 (已启用)';
+        badge.style.background = '#28a745';
+    } else {
+        badge.innerHTML = '🔒 管理员模式';
+        badge.style.background = '#8B0000';
+    }
+}
+
+function openAdminLoginModal() {
+    const modal = document.getElementById('adminLoginModal');
+    if (modal) modal.classList.add('active');
+    const passwordInput = document.getElementById('adminPassword');
+    if (passwordInput) passwordInput.value = '';
+}
+
+function closeAdminLoginModal() {
+    const modal = document.getElementById('adminLoginModal');
+    if (modal) modal.classList.remove('active');
+}
+
+function verifyAdmin() {
+    const password = document.getElementById('adminPassword');
+    if (!password) return;
+    if (password.value === ADMIN_PASSWORD) {
+        isAdminMode = true;
+        sessionStorage.setItem('isAdminMode', 'true');
+        closeAdminLoginModal();
+        updateAdminBadge();
+        renderResults();
+        alert('管理员模式已启用！');
+    } else {
+        alert('密码错误！');
+    }
+}
+
+function checkAdminMode() {
+    const saved = sessionStorage.getItem('isAdminMode');
+    if (saved === 'true') {
+        isAdminMode = true;
+    }
+    updateAdminBadge();
+}
+
+// 下载文件
+function downloadFile(dataUrl, fileName) {
+    const link = document.createElement('a');
+    link.href = dataUrl;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// 图片预览
+function previewImage(input) {
+    const preview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+    
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            if (previewImg) previewImg.src = e.target.result;
+            if (preview) preview.style.display = 'block';
+            currentImageData = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        if (preview) preview.style.display = 'none';
+        currentImageData = null;
+    }
+}
+
+function previewFile(input) {
+    const filePreview = document.getElementById('filePreview');
+    const fileNameSpan = document.getElementById('fileName');
+    
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const fileSize = file.size / 1024 / 1024;
+        if (fileSize > 10) {
+            alert('文件大小不能超过 10MB！');
+            input.value = '';
+            if (filePreview) filePreview.style.display = 'none';
+            currentFileData = null;
+            currentFileName = null;
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            currentFileData = e.target.result;
+            currentFileName = file.name;
+            if (fileNameSpan) fileNameSpan.innerHTML = `📎 已选择：${file.name}`;
+            if (filePreview) filePreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        if (filePreview) filePreview.style.display = 'none';
+        currentFileData = null;
+        currentFileName = null;
+    }
+}
+
+function clearFile() {
+    const fileInput = document.getElementById('resultFile');
+    const filePreview = document.getElementById('filePreview');
+    if (fileInput) fileInput.value = '';
+    if (filePreview) filePreview.style.display = 'none';
+    currentFileData = null;
+    currentFileName = null;
+}
+
+function openAddResultModal() {
+    const modal = document.getElementById('resultModal');
+    if (modal) modal.classList.add('active');
+    const form = document.getElementById('addResultForm');
+    if (form) form.reset();
+    const imagePreview = document.getElementById('imagePreview');
+    const filePreview = document.getElementById('filePreview');
+    if (imagePreview) imagePreview.style.display = 'none';
+    if (filePreview) filePreview.style.display = 'none';
+    currentImageData = null;
+    currentFileData = null;
+    currentFileName = null;
+}
+
+function closeModal() {
+    const modal = document.getElementById('resultModal');
+    if (modal) modal.classList.remove('active');
+    const form = document.getElementById('addResultForm');
+    if (form) form.reset();
+    const imagePreview = document.getElementById('imagePreview');
+    const filePreview = document.getElementById('filePreview');
+    if (imagePreview) imagePreview.style.display = 'none';
+    if (filePreview) filePreview.style.display = 'none';
+    currentImageData = null;
+    currentFileData = null;
+    currentFileName = null;
+}
+
+async function addNewResult(type, title, imageData, link, fileData, fileName) {
+    if (!title) {
+        alert('请输入成果名称');
+        return;
+    }
+    
+    try {
+        const newResult = await saveDataToGitHub(type, title, imageData, link, fileData, fileName);
+        
+        if (type === 'ongoing') {
+            ongoingResults.push(newResult);
+            localStorage.setItem(CURRENT_ONGOING_KEY, JSON.stringify(ongoingResults));
+        } else {
+            outputResults.push(newResult);
+            localStorage.setItem(CURRENT_OUTPUT_KEY, JSON.stringify(outputResults));
+        }
+        
+        renderResults();
+        alert(`成果「${title}」已添加！`);
+    } catch (error) {
+        alert('添加失败：' + error.message);
+    }
+}
+
+// 初始化
+async function initResultsPage() {
+    checkAdminMode();
+    
+    // 先从 localStorage 读取缓存
+    const cachedOngoing = localStorage.getItem(CURRENT_ONGOING_KEY);
+    const cachedOutput = localStorage.getItem(CURRENT_OUTPUT_KEY);
+    
+    if (cachedOngoing && cachedOutput) {
+        ongoingResults = JSON.parse(cachedOngoing);
+        outputResults = JSON.parse(cachedOutput);
+        renderResults();
+    }
+    
+    // 再从 GitHub 刷新数据
+    await loadDataFromGitHub();
+}
+
+// 表单提交事件
+if (document.getElementById('addResultForm')) {
+    document.getElementById('addResultForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const type = document.getElementById('resultType').value;
+        const title = document.getElementById('resultTitle').value.trim();
+        const link = document.getElementById('resultLink').value.trim();
+        
+        if (!title) {
+            alert('请输入成果名称');
+            return;
+        }
+        
+        await addNewResult(type, title, currentImageData, link, currentFileData, currentFileName);
+        closeModal();
+    });
+}
+
+// 模态框背景关闭
+if (document.getElementById('resultModal')) {
+    document.getElementById('resultModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+}
+
+if (document.getElementById('adminLoginModal')) {
+    document.getElementById('adminLoginModal').addEventListener('click', function(e) {
+        if (e.target === this) closeAdminLoginModal();
+    });
+}
+
+// 右键退出管理员模式
+const adminBadge = document.getElementById('adminBadge');
+if (adminBadge) {
+    adminBadge.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        if (isAdminMode && confirm('退出管理员模式？')) {
+            isAdminMode = false;
+            sessionStorage.removeItem('isAdminMode');
+            updateAdminBadge();
+            renderResults();
+            alert('已退出管理员模式');
+        }
+    });
+}
