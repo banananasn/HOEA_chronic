@@ -157,14 +157,14 @@ const newsCardsData = [
 
 // ============== 调研现状更新 ==================
 const interviewLinks = [
-    { title: "2026年4月7日 项目组赴四川省肿瘤医院开展调研学习", url: "interview.html?id=260407" },
-    { title: "2026年4月8日 项目组赴四川大学华西医院开展调研学习", url: "interview.html?id=260408" },
-    { title: "2026年4月15日 项目组赴四川省第二中医医院开展调研学习", url: "interview.html?id=260415" },
-    { title: "2026年4月17日 项目组赴成都高新区桂溪社区卫生服务中心开展调研学习", url: "interview.html?id=2604171" },
-    { title: "2026年4月17日 项目组赴成都高新区石羊社区卫生服务中心开展调研学习", url: "interview.html?id=2604172" },
-    { title: "2026年4月27日 项目组赴四川大学华西第四医院心血管内科开展调研学习" },
-    { title: "2026年5月15日 项目组赴成都高新区西园社区卫生服务中心开展调研学习", url: "interview.html?id=2605151" },
-    { title: "2026年5月15日 项目组赴成都高新区合作社区卫生服务中心开展调研学习", url: "interview.html?id=2605152" },
+    { title: "2026年4月7日丨项目组赴四川省肿瘤医院开展调研学习", url: "interview.html?id=260407" },
+    { title: "2026年4月8日丨项目组赴四川大学华西医院开展调研学习", url: "interview.html?id=260408" },
+    { title: "2026年4月15日丨项目组赴四川省第二中医医院开展调研学习", url: "interview.html?id=260415" },
+    { title: "2026年4月17日丨项目组赴成都高新区桂溪社区卫生服务中心开展调研学习", url: "interview.html?id=2604171" },
+    { title: "2026年4月17日丨项目组赴成都高新区石羊社区卫生服务中心开展调研学习", url: "interview.html?id=2604172" },
+    { title: "2026年4月27日丨项目组赴四川大学华西第四医院心血管内科开展调研学习" },
+    { title: "2026年5月15日丨项目组赴成都高新区西园社区卫生服务中心开展调研学习", url: "interview.html?id=2605151" },
+    { title: "2026年5月15日丨项目组赴成都高新区合作社区卫生服务中心开展调研学习", url: "interview.html?id=2605152" },
 ];
 
 const resultsCardsData = [
