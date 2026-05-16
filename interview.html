@@ -128,7 +128,7 @@
                 container.innerHTML = `
                     <h2>${data.title}</h2>
                     <div class="interview-date" style="color: #8B0000; margin-bottom: 20px;">${data.date}</div>
-                    ${data.image ? `<img src="${data.image}" alt="${data.title}" style="width: 70%; display: block; margin: 0 auto; border-radius: 12px; margin-bottom: 20px;">` : ''}
+                    ${data.image ? `<img src="${data.image}" alt="${data.title}" style="width: 65%; display: block; margin: 0 auto; border-radius: 12px; margin-bottom: 20px;">` : ''}
                     ${data.paragraphs.map(p => `<p>${p}</p>`).join('')}
                 `;
             } else {
