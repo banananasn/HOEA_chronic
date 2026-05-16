@@ -217,7 +217,6 @@ function loadInterviewLinks() {
                 // 没有 url：纯文本
                 li.textContent = link.title;
                 li.style.cursor = "default";
-                li.style.color = "#666";
             }
             interviewList.appendChild(li);
         });
