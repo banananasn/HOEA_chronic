@@ -532,11 +532,19 @@ function closeModal() {
 }
 
 async function addNewResult(type, title, imageData, link, fileData, fileName) {
-    if (!title) {
+    // 必填项验证
+    if (!type) {
+        alert('请选择成果类型');
+        return;
+    }
+    if (!title || title.trim() === '') {
         alert('请输入成果名称');
         return;
     }
-    
+    if (!imageData) {
+        alert('请上传封面图片');
+        return;
+    }  
     try {
         const newResult = await saveDataToGitHub(type, title, imageData, link, fileData, fileName);
         
@@ -546,8 +554,7 @@ async function addNewResult(type, title, imageData, link, fileData, fileName) {
         } else {
             outputResults.push(newResult);
             localStorage.setItem(CURRENT_OUTPUT_KEY, JSON.stringify(outputResults));
-        }
-        
+        }      
         renderResults();
         alert(`成果「${title}」已添加！`);
     } catch (error) {
