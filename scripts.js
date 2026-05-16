@@ -25,7 +25,6 @@ async function getGitHubTokenForUpload() {
 
 // 读取成果时不需要 Token（公开读取）
 async function githubRequestRead(endpoint) {
-    // 注意：读取 Issues 不需要认证，因为是公开仓库
     const url = `https://api.github.com/repos/banananasn/project-results-data/${endpoint}`;
     const response = await fetch(url, {
         method: 'GET',
@@ -236,7 +235,7 @@ if (document.getElementById('results-cards')) loadResultsCards();
 if (document.getElementById("interview-links")) loadInterviewLinks();
 
 
-// ========== 成果页面核心函数 ==========（这后面所有的代码都是让成果可以保存在云端而不是本地的代码）
+// ========== 成果页面核心函数 ==========
 // 当前页面的存储键（由每个成果页面调用设置）
 let CURRENT_ONGOING_KEY = 'ongoingResults';
 let CURRENT_OUTPUT_KEY = 'outputResults';
@@ -262,7 +261,6 @@ async function loadDataFromGitHub() {
     ongoingResults = allResults.filter(r => r.type === 'ongoing');
     outputResults = allResults.filter(r => r.type === 'output');
     
-    // 保存到 localStorage
     localStorage.setItem(CURRENT_ONGOING_KEY, JSON.stringify(ongoingResults));
     localStorage.setItem(CURRENT_OUTPUT_KEY, JSON.stringify(outputResults));
     
@@ -532,6 +530,8 @@ function closeModal() {
 }
 
 async function addNewResult(type, title, imageData, link, fileData, fileName) {
+    console.log('addNewResult 开始执行');
+    
     // 必填项验证
     if (!type) {
         alert('请选择成果类型');
@@ -547,16 +547,20 @@ async function addNewResult(type, title, imageData, link, fileData, fileName) {
     }
     
     try {
+        console.log('开始调用 saveDataToGitHub');
         // 保存到 GitHub
         await saveDataToGitHub(type, title, imageData, link, fileData, fileName);
+        console.log('saveDataToGitHub 成功');
         
-        // 重新从 GitHub 加载所有数据（这一步会自动更新 ongoingResults/outputResults 和 localStorage）
+        console.log('开始调用 loadDataFromGitHub');
+        // 重新从 GitHub 加载所有数据
         await loadDataFromGitHub();
+        console.log('loadDataFromGitHub 成功');
         
         renderResults();
         alert(`成果「${title}」已添加！`);
     } catch (error) {
-        console.error('添加失败:', error);
+        console.error('添加失败详细错误:', error);
         alert('添加失败：' + error.message);
     }
 }
@@ -583,26 +587,36 @@ async function initResultsPage() {
 if (document.getElementById('addResultForm')) {
     document.getElementById('addResultForm').addEventListener('submit', async function(e) {
         e.preventDefault();
+        console.log('表单提交事件触发');
         
         const type = document.getElementById('resultType').value;
         const title = document.getElementById('resultTitle').value.trim();
         const link = document.getElementById('resultLink').value.trim();
         
+        console.log('类型:', type);
+        console.log('标题:', title);
+        console.log('封面图片:', currentImageData ? '有' : '无');
+        
         // 必填项验证
         if (!type) {
             alert('请选择成果类型');
+            console.log('验证失败: 未选择类型');
             return;
         }
         if (!title) {
             alert('请输入成果名称');
+            console.log('验证失败: 未输入标题');
             return;
         }
         if (!currentImageData) {
             alert('请上传封面图片');
+            console.log('验证失败: 未上传封面');
             return;
         }
         
+        console.log('验证通过，开始调用 addNewResult');
         await addNewResult(type, title, currentImageData, link, currentFileData, currentFileName);
+        console.log('addNewResult 执行完毕');
         closeModal();
     });
 }
