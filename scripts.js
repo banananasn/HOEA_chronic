@@ -140,7 +140,7 @@ async function addResultToGitHub(type, title, imageData, link, fileData, fileNam
     };
 }
 
-// ========== 以下是你原有的静态数据函数（保持不变） ==========
+// ========== 原有的静态数据函数 ==========
 
 const newsCardsData = [
     { 
