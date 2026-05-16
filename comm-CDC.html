@@ -5,6 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>项目沟通 - 四川省疾病预防控制中心 | 整合式智慧慢病管理模式研究</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 项目沟通卡片容器 */
+        .communication-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        /* 单个卡片 - 左右布局，悬浮效果 */
+        .comm-card {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        .comm-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        /* 左侧图片区域 - 占 20% */
+        .comm-card-image {
+            flex: 1;
+            min-width: 100px;
+            max-width: 140px;
+            background-color: #f0f2f5;
+            overflow: hidden;
+        }
+        .comm-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .comm-card:hover .comm-card-image img {
+            transform: scale(1.03);
+        }
+        /* 右侧内容区域 - 占 4 份 */
+        .comm-card-content {
+            flex: 4;
+            padding: 1rem 1.5rem 1rem 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        /* 标题 */
+        .comm-card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e466e;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        /* 摘要 */
+        .comm-card-summary {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        /* 日期 */
+        .comm-card-date {
+            font-size: 0.7rem;
+            color: #8B0000;
+        }
+        /* 暂无内容提示 */
+        .empty-tip {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+            background: #fafafa;
+            border-radius: 16px;
+            font-style: italic;
+        }
+        /* 手机端适配 */
+        @media (max-width: 768px) {
+            .comm-card {
+                flex-direction: column;
+            }
+            .comm-card-image {
+                max-width: 100%;
+                height: 160px;
+            }
+            .comm-card-content {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 <body class="sub-page">
 
@@ -25,17 +121,60 @@
     </nav>
 
     <main class="sub-page-content" style="position: relative;">
-        <!-- 标题 -->
         <h2 style="text-align: center; margin-bottom: 1rem;">四川省疾病预防控制中心 - 项目沟通</h2>
 
-        <!-- 右上角返回按钮 -->
         <div style="position: absolute; top: 20px; right: 20px; display: flex; gap: 1rem;">
             <button onclick="window.location.href='teams.html'" class="back-button">← 返回合作单位</button>
         </div>
 
-        <!-- 沟通记录内容 -->
         <div id="communication-cards" class="communication-cards-container">
-            <div class="empty-tip">暂无沟通记录，尚待补充</div>
+            <!-- 卡片1：260417桂溪 -->
+            <div class="comm-card" onclick="window.location.href='https://heoa2026scu.github.io/IICDM.github.io/interview.html?id=2604171'">
+                <div class="comm-card-image">
+                    <img src="images/interview/260417桂溪.jpg" alt="桂溪">
+                </div>
+                <div class="comm-card-content">
+                    <div class="comm-card-title">项目组赴成都高新区桂溪社区卫生服务中心开展调研学习</div>
+                    <div class="comm-card-summary">本次调研系“整合式智慧慢病管理模式研究”课题项目组赴成都高新区桂溪社区卫生服务中心开展的实地调研活动。调研由四川大学华西公共卫生学院/华西第四医院助理研究员赖泓宇带队，代表国家重大科技专项课题执行方，就基层慢病管理现状、创新举措及合作可能性与桂溪社区卫生服务中心相关负责人进行深入交流。</div>
+                    <div class="comm-card-date">2026年4月17日 13:30</div>
+                </div>
+            </div>
+
+            <!-- 卡片2：260417石羊 -->
+            <div class="comm-card" onclick="window.location.href='https://heoa2026scu.github.io/IICDM.github.io/interview.html?id=2604172'">
+                <div class="comm-card-image">
+                    <img src="images/interview/260417石羊.jpg" alt="石羊">
+                </div>
+                <div class="comm-card-content">
+                    <div class="comm-card-title">项目组赴成都高新区石羊社区卫生服务中心开展调研学习</div>
+                    <div class="comm-card-summary">本课题为国家重大科技专项课题“整合式智慧慢病管理模式”，其核心目标在于打通医疗机构间的业务流转堵点，实现疾病管理流程的深度整合。该项目定位于公益性民生项目，旨在现有体系基础上寻找可推广的实践样板。选择高新区作为样板打造地的主要原因包括：一是人口结构优势，高新区产业人口多且职业人群集中，适合探索慢病管理“关口前移”模式。二是基层基础扎实，高新区社区卫生服务中心已具备较强的慢病管理能力，为项目落地提供了支撑。</div>
+                    <div class="comm-card-date">2026年4月17日 15:00</div>
+                </div>
+            </div>
+
+            <!-- 卡片3：260515西园 -->
+            <div class="comm-card" onclick="window.location.href='https://heoa2026scu.github.io/IICDM.github.io/interview.html?id=2605151'">
+                <div class="comm-card-image">
+                    <img src="images/interview/260515西园.jpg" alt="西园">
+                </div>
+                <div class="comm-card-content">
+                    <div class="comm-card-title">项目组赴成都高新区西园社区卫生服务中心开展调研学习</div>
+                    <div class="comm-card-summary">……。</div>
+                    <div class="comm-card-date">2026年5月15日 13:30</div>
+                </div>
+            </div>
+
+             <!-- 卡片4：260515合作 -->
+            <div class="comm-card" onclick="window.location.href='https://heoa2026scu.github.io/IICDM.github.io/interview.html?id=2605152'">
+                <div class="comm-card-image">
+                    <img src="images/interview/260515合作.jpg" alt="合作">
+                </div>
+                <div class="comm-card-content">
+                    <div class="comm-card-title">项目组赴成都高新区合作社区卫生服务中心开展调研学习</div>
+                    <div class="comm-card-summary">……。</div>
+                    <div class="comm-card-date">2026年5月15日 15:30</div>
+                </div>
+            </div>
         </div>
     </main>
 
