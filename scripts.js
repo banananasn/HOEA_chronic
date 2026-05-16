@@ -200,16 +200,25 @@ function loadNewsCards() {
 function loadInterviewLinks() {
     const interviewList = document.getElementById("interview-links");
     if (!interviewList) return;
+    
     if (interviewLinks.length > 0) {
         interviewList.innerHTML = "";
         interviewLinks.forEach(link => {
             const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = link.url;
-            a.textContent = link.title;
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-            li.appendChild(a);
+            if (link.url) {
+                // 有 url：创建可点击链接
+                const a = document.createElement("a");
+                a.href = link.url;
+                a.textContent = link.title;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                li.appendChild(a);
+            } else {
+                // 没有 url：纯文本
+                li.textContent = link.title;
+                li.style.cursor = "default";
+                li.style.color = "#666";
+            }
             interviewList.appendChild(li);
         });
     }
