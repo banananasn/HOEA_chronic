@@ -140,7 +140,7 @@ async function addResultToGitHub(type, title, imageData, link, fileData, fileNam
     };
 }
 
-// ========== 原有的静态数据函数 ==========
+// ========== 以下是你原有的静态数据函数（保持不变） ==========
 
 const newsCardsData = [
     { 
@@ -583,6 +583,7 @@ async function initResultsPage() {
 if (document.getElementById('addResultForm')) {
     document.getElementById('addResultForm').addEventListener('submit', async function(e) {
         e.preventDefault();
+        
         const type = document.getElementById('resultType').value;
         const title = document.getElementById('resultTitle').value.trim();
         const link = document.getElementById('resultLink').value.trim();
