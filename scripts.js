@@ -545,8 +545,12 @@ async function addNewResult(type, title, imageData, link, fileData, fileName) {
         alert('请上传封面图片');
         return;
     }  
-    try {
-        const newResult = await saveDataToGitHub(type, title, imageData, link, fileData, fileName);
+try {
+        // 先保存到 GitHub
+        await saveDataToGitHub(type, title, imageData, link, fileData, fileName);
+        
+        // 重新从 GitHub 加载所有数据（确保数据同步）
+        await loadDataFromGitHub();
         
         if (type === 'ongoing') {
             ongoingResults.push(newResult);
@@ -612,9 +616,9 @@ if (document.getElementById('adminLoginModal')) {
 }
 
 // 右键退出管理员模式
-const adminBadge = document.getElementById('adminBadge');
-if (adminBadge) {
-    adminBadge.addEventListener('contextmenu', function(e) {
+document.addEventListener('contextmenu', function(e) {
+    const badge = document.getElementById('adminBadge');
+    if (badge && badge.contains(e.target)) {
         e.preventDefault();
         if (isAdminMode && confirm('退出管理员模式？')) {
             isAdminMode = false;
@@ -623,5 +627,5 @@ if (adminBadge) {
             renderResults();
             alert('已退出管理员模式');
         }
-    });
-}
+    }
+});
