@@ -3,8 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>研究动态 - 整合式智慧慢病管理模式研究</title>
+    <title>研究计划 - 整合式智慧慢病管理模式研究</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 研究计划表格样式 */
+        .plan-table-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+        
+        .plan-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .plan-table caption {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e466e;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .plan-table th {
+            background: #8B0000;
+            color: white;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .plan-table td {
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            color: #333;
+            font-size: 0.95rem;
+        }
+        
+        .plan-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .plan-table tr:hover {
+            background: #f0f0f0;
+            transition: background 0.2s ease;
+        }
+        
+        /* 手机端适配 */
+        @media (max-width: 768px) {
+            .plan-table th,
+            .plan-table td {
+                padding: 0.8rem 0.5rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
 </head>
 <body class="sub-page">
 
@@ -29,8 +90,40 @@
     <!-- 页面主要内容 -->
     <main class="sub-page-content">
         <h2>研究计划</h2>
-        <div class="image-container">
-            <img src="images/AA.jpg" alt="研究计划" style="width: 80%; margin: 0 auto; display: block;" />
+        
+        <div class="plan-table-container">
+            <table class="plan-table">
+                <caption>课题二 年度计划表</caption>
+                <thead>
+                    <tr>
+                        <th>考核时间</th>
+                        <th>考核指标</th>
+                        <th>成果形式</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025年11月</td>
+                        <td>初步制定4条整合式慢病管理路径</td>
+                        <td>研究报告</td>
+                    </tr>
+                    <tr>
+                        <td>2026年11月</td>
+                        <td>制定4条整合式慢病管理路径</td>
+                        <td>中期报告；累计发表至少2篇论文</td>
+                    </tr>
+                    <tr>
+                        <td>2027年11月</td>
+                        <td>初步开发整合式智慧慢病管理路径</td>
+                        <td>研究报告</td>
+                    </tr>
+                    <tr>
+                        <td>2028年11月</td>
+                        <td>开发整合式智慧慢病管理模式</td>
+                        <td>终期报告；累计发表至少4篇论文</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 
